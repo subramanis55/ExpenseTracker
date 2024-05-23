@@ -57,13 +57,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomSearchBox.cs">
+    <Compile Include="CommonUserControl\CustomSearchBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CustomSearchBox.designer.cs">
+    <Compile Include="CommonUserControl\CustomSearchBox.designer.cs">
       <DependentUpon>CustomSearchBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="EllipseControl.cs">
+    <Compile Include="CommonUserControl\EllipseControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ProjectUserControl\AddCategoryU.cs">
@@ -165,13 +165,13 @@
     <Compile Include="Login\LoginBackgorundMovingU.Designer.cs">
       <DependentUpon>LoginBackgorundMovingU.cs</DependentUpon>
     </Compile>
-    <Compile Include="TextBox.cs">
+    <Compile Include="CommonUserControl\TextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TextBox.designer.cs">
+    <Compile Include="CommonUserControl\TextBox.designer.cs">
       <DependentUpon>TextBox.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="CustomSearchBox.resx">
+    <EmbeddedResource Include="CommonUserControl\CustomSearchBox.resx">
       <DependentUpon>CustomSearchBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectUserControl\AddCategoryU.resx">
@@ -223,7 +223,7 @@
     <EmbeddedResource Include="Login\LoginBackgorundMovingU.resx">
       <DependentUpon>LoginBackgorundMovingU.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TextBox.resx">
+    <EmbeddedResource Include="CommonUserControl\TextBox.resx">
       <DependentUpon>TextBox.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">

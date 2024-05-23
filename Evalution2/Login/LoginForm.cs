@@ -20,7 +20,10 @@ namespace ExpenseTracker
         public LoginForm()
         {
             InitializeComponent();
-            ExpenseManager.DataBaseConnecting();
+            if (!ExpenseManager.DataBaseConnecting())
+            {
+                ExpenseManager.DataBaseExitsCheck();
+            }
             loginPageU.OnForgetPasswordLinkLabelClick += LoginpageUOnForgetPasswordLinkLabelClick;
             loginPageU.OnLoginBtnClick += LoginpageUOnLoginBtnClick;
             loginPageU.OnSignUpLinkLabelClick += LoginpageUOnSignUpLinkLabelClick;

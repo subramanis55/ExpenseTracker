@@ -17,19 +17,61 @@ namespace ExpenseTracker
         public static List<Category> CategoryList = new List<Category>();
         public static List<Expense> ExpenseList = new List<Expense>();
         private static MySqlCommand cmd=new MySqlCommand();
-        public static void  DataBaseConnecting(){
-            string connectionstring = "server=192.168.3.50;port=3306;uid=root;pwd=$uppu424*;database=ExpenseTracker";
+        public static bool  DataBaseConnecting(){
+            string connectionstring = "server=localhost;port=3306;uid=root;pwd=;database=ExpenseTracker";
             mySqlConnection = new MySqlConnection(connectionstring);
           
             try
             {
                 mySqlConnection.Open();
                 cmd.Connection = mySqlConnection;
+                return true;
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+                return false;
             }
+        }
+        public static void DataBaseExitsCheck()
+        {
+            string connectionstring = "server=localhost;port=3306;uid=root;pwd=;database=mysql";
+            mySqlConnection = new MySqlConnection(connectionstring);
+
+            try
+            {
+                mySqlConnection.Open();
+                cmd.Connection = mySqlConnection;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            ExcuteQuery("Create database ExpenseTracker;");
+            string connectionstring2 = "server=localhost;port=3306;uid=root;pwd=;database=ExpenseTracker";
+            mySqlConnection = new MySqlConnection(connectionstring2);
+
+            try
+            {
+                mySqlConnection.Open();
+                cmd.Connection = mySqlConnection;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+         
+            ExcuteQuery("create table category(CategoryID int auto_increment,CategoryName varchar(100),BudgetLimit int,CurrentMonthUsedAmount int,primary key(CategoryID)); ");
+            ExcuteQuery("create table expense(ExpenseID int auto_increment primary key,CategoryID int,DateAndTime datetime,Amount int,Detail varchar(200),foreign key(CategoryID) references category(CategoryID)); ");
+            ExcuteQuery("create table logininformation(LoginUsername varchar(100),  LoginPassword varchar(50),  UpdatedDate Datetime,  Id int); ");
+            ExcuteQuery("insert into logininformation(LoginUsername,LoginPassword,UpdatedDate,Id) values('a','a','2024-03-18',1);");
+            ExcuteQuery("insert into category(CategoryName,BudgetLimit,CurrentMonthUsedAmount) values ('All',10000,0),('Travel',2000,0),('Movies',2000,0),('Food',2000,0);");
+            ExcuteQuery("set foreign_key_checks=0;");
+            ExcuteQuery("insert into category(CategoryName,BudgetLimit,CurrentMonthUsedAmount) values ('Others',10000,0);");
+            ExcuteQuery("Update category  set CategoryID=100 where CategoryID=5;");
+            ExcuteQuery("set foreign_key_checks=1;");
+
+                
 
         }
         public static string FindCategoryName(int categoryID)
@@ -43,9 +85,7 @@ namespace ExpenseTracker
                 }           
                 }
                 }
-      
 
-         
             return "Other";
         }
         public static string FindCategoryId(string name)
@@ -112,7 +152,6 @@ namespace ExpenseTracker
             string foreignKeyCheckOn = $"SET FOREIGN_KEY_CHECKS ={1};";
             cmd.CommandText = foreignKeyCheckOn;
             cmd.ExecuteNonQuery();
-
             return true;
         }
         public static void ExcuteQuery(string query){

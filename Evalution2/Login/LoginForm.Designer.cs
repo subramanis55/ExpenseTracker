@@ -30,6 +30,7 @@
         {
             this.mainP = new System.Windows.Forms.Panel();
             this.loginBackgorundMovingU1 = new ExpenseTracker.LoginBackgorundMovingU();
+            this.ellipseControl1 = new ChatApplication.EllipseControl();
             this.mainP.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,6 +58,11 @@
             this.loginBackgorundMovingU1.TabIndex = 0;
             this.loginBackgorundMovingU1.Visible = false;
             // 
+            // ellipseControl1
+            // 
+            this.ellipseControl1.CornerRadius = 10;
+            this.ellipseControl1.TargetControl = this;
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -79,5 +85,6 @@
         #endregion
         private System.Windows.Forms.Panel mainP;
         private LoginBackgorundMovingU loginBackgorundMovingU1;
+        private ChatApplication.EllipseControl ellipseControl1;
     }
 }
