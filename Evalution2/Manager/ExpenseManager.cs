@@ -7,27 +7,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ExpenseTracker
+namespace ExpenseTracker.Manager
 {
-    static class ExpenseManager
+    public static class ExpenseManager
     {
         public static MySqlConnection mySqlConnection;
-        private static int category_Id = 1;
+        public static int AllCategoryId = 1;
+        public static int OtherCategoryId = 2;
         private static int Expense_Id = 1;
-        public static List<Category> CategoryList = new List<Category>();
-        public static List<Expense> ExpenseList = new List<Expense>();
-        private static MySqlCommand cmd=new MySqlCommand();
-        public static bool  DataBaseConnecting(){
-            string connectionstring = "server=localhost;port=3306;uid=root;pwd=;database=ExpenseTracker";
+        public static string DatabasePassword = "";
+        public static string DatabaseName = "ExpenseTracker";
+        public static Dictionary<string, Category> CategoryDictionary = new Dictionary<string, Category>();
+        public static Dictionary<int, Expense> ExpenseDictionary = new Dictionary<int, Expense>();
+        private static MySqlCommand cmd = new MySqlCommand();
+        public static bool DataBaseConnecting()
+        {
+            string connectionstring = $"server=localhost;port=3306;uid=root;pwd={DatabasePassword };database={DatabaseName}";
             mySqlConnection = new MySqlConnection(connectionstring);
-          
+
             try
             {
                 mySqlConnection.Open();
                 cmd.Connection = mySqlConnection;
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 return false;
@@ -60,243 +64,187 @@ namespace ExpenseTracker
             {
                 MessageBox.Show(ex.ToString());
             }
-         
             ExcuteQuery("create table category(CategoryID int auto_increment,CategoryName varchar(100),BudgetLimit int,CurrentMonthUsedAmount int,primary key(CategoryID)); ");
             ExcuteQuery("create table expense(ExpenseID int auto_increment primary key,CategoryID int,DateAndTime datetime,Amount int,Detail varchar(200),foreign key(CategoryID) references category(CategoryID)); ");
             ExcuteQuery("create table logininformation(LoginUsername varchar(100),  LoginPassword varchar(50),  UpdatedDate Datetime,  Id int); ");
             ExcuteQuery("insert into logininformation(LoginUsername,LoginPassword,UpdatedDate,Id) values('a','a','2024-03-18',1);");
-            ExcuteQuery("insert into category(CategoryName,BudgetLimit,CurrentMonthUsedAmount) values ('All',10000,0),('Travel',2000,0),('Movies',2000,0),('Food',2000,0);");
-            ExcuteQuery("set foreign_key_checks=0;");
-            ExcuteQuery("insert into category(CategoryName,BudgetLimit,CurrentMonthUsedAmount) values ('Others',10000,0);");
-            ExcuteQuery("Update category  set CategoryID=100 where CategoryID=5;");
-            ExcuteQuery("set foreign_key_checks=1;");
-
-                
+            ExcuteQuery("insert into category(CategoryName,BudgetLimit,CurrentMonthUsedAmount) values ('All',10000,0),('Others',10000,0),('Travel',2000,0),('Movies',2000,0),('Food',2000,0);");
 
         }
-        public static string FindCategoryName(int categoryID)
+        public static void ExcuteQuery(string query)
         {
-      
-                string categoryNameFindQuery = $"select CategoryName from category where CategoryID={categoryID}";
-                using(MySqlCommand command=new MySqlCommand(categoryNameFindQuery,mySqlConnection)){
-                using(MySqlDataReader reader=command.ExecuteReader()){
-                if(reader.Read()){
-                       return reader["CategoryName"].ToString();
-                }           
-                }
-                }
-
-            return "Other";
-        }
-        public static string FindCategoryId(string name)
-        {
-
-           
-            return "";
-        }
-        public static int FindCategoryLimit(int id)
-        {
-
-           
-            return 0;
-        }
-
-
-        // Add Category
-
-        public static bool AddCategory(string name, int limit)
-        {
-            string addCategoryQuery = $"insert into category(CategoryName,BudgetLimit,CurrentMonthUsedAmount) values ('{name}',{limit},{0});";
-            cmd.CommandText = addCategoryQuery;
-            cmd.ExecuteNonQuery();
-            return true;
-        }
-        public static bool AddCategory(string name, int limit, int index)
-        {
-            string addCategoryQuery = $"insert into category(CategoryName,BudgetLimit,CurrentMonthUsedAmount) values ('{name}',{limit},{(int)0});";
-            cmd.CommandText = addCategoryQuery;
-            cmd.ExecuteNonQuery();
-            return true;
-        }
-
-        // Update Category
-
-        public static void UpdateCategory(int categoryID, string categoryName, int budgetLimit)
-        {
-            string foreignKeyCheckOFF = $"SET FOREIGN_KEY_CHECKS ={0};";
-            cmd.CommandText = foreignKeyCheckOFF;
-            cmd.ExecuteNonQuery();
-            string updateCategoryQuery = $"update category set CategoryName='{categoryName}',BudgetLimit='{budgetLimit}' where CategoryID={categoryID}";
-           cmd.CommandText = updateCategoryQuery;
-            cmd.ExecuteNonQuery();
-            string foreignKeyCheckOn = $"SET FOREIGN_KEY_CHECKS ={1};";
-            cmd.CommandText = foreignKeyCheckOn;
-            cmd.ExecuteNonQuery();
-        }
-
-        // Delete Category
-
-        public static bool DeleteCategory(int categoryID)
-        {
-            string foreignKeyCheckOFF = $"SET FOREIGN_KEY_CHECKS ={0};";
-            ExcuteQuery(foreignKeyCheckOFF);
-            string deleteCategoryQuery = $"delete from category where CategoryID={categoryID};";
-            ExcuteQuery(deleteCategoryQuery); 
-            string convertExpenseToOthersCategory = $"update expense  set CategoryID={100} where CategoryID={categoryID};";
-            ExcuteQuery(convertExpenseToOthersCategory);
-            string sumOfOtherCategoryAmountAfterDeleteQuery = $" Select Sum(Amount) from expense where CategoryID={100} and Month(DateAndTime)={DateTime.Now.Month} and Year(DateAndTime)={DateTime.Now.Year};";
-            cmd.CommandText = sumOfOtherCategoryAmountAfterDeleteQuery;
-            int sumOfOtherCategoryAmountAfterDelete = Convert.ToInt32(cmd.ExecuteScalar());
-            string UpdateOtherCategoryAmountQuery = $"Update category set CurrentMonthUsedAmount={sumOfOtherCategoryAmountAfterDelete} where  CategoryID={100}";
-            ExcuteQuery(UpdateOtherCategoryAmountQuery);
-            string foreignKeyCheckOn = $"SET FOREIGN_KEY_CHECKS ={1};";
-            cmd.CommandText = foreignKeyCheckOn;
-            cmd.ExecuteNonQuery();
-            return true;
-        }
-        public static void ExcuteQuery(string query){
             cmd.CommandText = query;
             cmd.ExecuteNonQuery();
         }
-        public static bool ChangeLimit(int id, int limit)
+        public static void ExpenseRefresh()
         {
-          
-            return false;
+            ExpenseDictionary = GetExpenseSource();
         }
-        public static bool AddCurrentMonthSpentAmountToCategory(int categoryid, int amount)
+        public static void CategoryRefresh()
         {
-          
-            return false;
+            CategoryDictionary = GetCategorySource();
+            Category other = CategoryDictionary["" + 2];
+            CategoryDictionary.Remove("" + 2);
+            CategoryDictionary.Add("" + other.Id, other);
         }
-        
-        public static int GetCurrentMonthLimitExceedAmount(int categoryID){
+        public static bool AddCategory(Category category)
+        {
+            string addCategoryQuery = $"insert into category(CategoryName,BudgetLimit,CurrentMonthUsedAmount) values ('{category.CategoryName}',{category.BudgetLimit},{category.CurrentMonthUsedAmount});";
+            cmd.CommandText = addCategoryQuery;
+            cmd.ExecuteNonQuery();
+            CategoryRefresh();
+            return true;
+        }
+        public static void UpdateCategory(Category category)
+        {
+            CategoryDictionary["" + category.Id].CategoryName = category.CategoryName;
+            CategoryDictionary["" + category.Id].BudgetLimit = category.BudgetLimit;
+            string foreignKeyCheckOFF = $"SET FOREIGN_KEY_CHECKS ={0};";
+            cmd.CommandText = foreignKeyCheckOFF;
+            cmd.ExecuteNonQuery();
+            string updateCategoryQuery = $"update category set CategoryName='{category.CategoryName}',BudgetLimit='{category.BudgetLimit}' where CategoryID={category.Id}";
+            cmd.CommandText = updateCategoryQuery;
+            cmd.ExecuteNonQuery();
+            string foreignKeyCheckOn = $"SET FOREIGN_KEY_CHECKS ={1};";
+            cmd.CommandText = foreignKeyCheckOn;
+            cmd.ExecuteNonQuery();
+        }
+        public static bool DeleteCategory(int categoryId)
+        {
+            CategoryDictionary.Remove("" + categoryId);
+            string foreignKeyCheckOFF = $"SET FOREIGN_KEY_CHECKS ={0};";
+            ExcuteQuery(foreignKeyCheckOFF);
+            string deleteCategoryQuery = $"delete from category where CategoryID={categoryId};";
+            ExcuteQuery(deleteCategoryQuery);
+            string convertExpenseToOthersCategory = $"update expense  set CategoryID={OtherCategoryId} where CategoryID={categoryId};";
+            ExcuteQuery(convertExpenseToOthersCategory);
+            int otherCategoryAmount = getCurrentMonthUsedAmountFromDatabaseExpenseTable(OtherCategoryId);
+            UpdategetCurrentMonthUsedAmount(OtherCategoryId, otherCategoryAmount);
+            CategoryDictionary["" + OtherCategoryId].CurrentMonthUsedAmount = otherCategoryAmount;
+            string foreignKeyCheckOn = $"SET FOREIGN_KEY_CHECKS ={1};";
+            cmd.CommandText = foreignKeyCheckOn;
+            cmd.ExecuteNonQuery();
+            ExpenseDictionary = GetExpenseSource();
+            return true;
+        }
+        public static int getCurrentMonthUsedAmountFromDatabaseExpenseTable(int categoryId)
+        {
+            string sumOfOtherCategoryAmountQuery = $" Select Sum(Amount) from expense where CategoryID={categoryId} and Month(DateAndTime)={DateTime.Now.Month} and Year(DateAndTime)={DateTime.Now.Year};";
 
+            cmd.CommandText = sumOfOtherCategoryAmountQuery;
+            var totalAmount = cmd.ExecuteScalar();
+            if (!(totalAmount is DBNull))
+            {
+                return Convert.ToInt32(totalAmount);
+            }
+            else
+                return 0;
+        }
+        public static int getCurrentMonthUsedAmountFromDatabaseExpenseTable()
+        {
+            string sumOfOtherCategoryAmountQuery = $" Select Sum(Amount) from expense where   Month(DateAndTime)={DateTime.Now.Month} and Year(DateAndTime)={DateTime.Now.Year};";
+
+            cmd.CommandText = sumOfOtherCategoryAmountQuery;
+            var totalAmount = cmd.ExecuteScalar();
+            if (!(totalAmount is DBNull))
+            {
+                return Convert.ToInt32(totalAmount);
+            }
+            else
+                return 0;
+        }
+        public static int GetCurrentMonthLimitExceedAmount(int categoryID)
+        {
             string getCurrentMonthUsedAmountQuery = $"select (CurrentMonthUsedAmount-BudgetLimit)  from category where CategoryID={categoryID};";
             cmd.CommandText = getCurrentMonthUsedAmountQuery;
             return Convert.ToInt32(cmd.ExecuteScalar());
         }
-       
-        public static Expense GetExpenseById(int expenseId)
+        public static Expense GetExpenseByIdFromDatabase(int expenseId)
         {
             string getExpenseQuery = $"select expense.ExpenseID ,expense.CategoryID ,expense.Amount ,expense.DateAndTime,expense.Detail From expense left Join category on expense.CategoryID = category.CategoryID where expense.ExpenseID={expenseId};";
             DataTable table = new DataTable();
             cmd.CommandText = getExpenseQuery;
-            using(MySqlDataReader reader=cmd.ExecuteReader()){
+            using (MySqlDataReader reader = cmd.ExecuteReader())
+            {
                 table.Load(reader);
             }
-            
-            return new Expense(int.Parse(table.Rows[0]["ExpenseID"].ToString()), int.Parse(table.Rows[0]["CategoryID"].ToString()), int.Parse(table.Rows[0]["Amount"].ToString()), (DateTime)table.Rows[0]["DateAndTime"], table.Rows[0]["Detail"].ToString());
-
+            return new Expense(int.Parse(table.Rows[0]["ExpenseID"].ToString()), int.Parse(table.Rows[0]["CategoryID"].ToString()), int.Parse(table.Rows[0]["Amount"].ToString()), (DateTime)table.Rows[0]["DateAndTime"], table.Rows[0]["Detail"].ToString(),CategoryDictionary["" + int.Parse(table.Rows[0]["CategoryID"].ToString())].CategoryName);
         }
-        public static DataTable GetCategoryById(int categoryId)
+        public static Category GetCategoryByIdFromDatabase(int categoryId)
         {
-
             DataTable table = new DataTable();
             string getCategoryQuery = $"select CategoryName,BudgetLimit from category where CategoryID={categoryId}";
             cmd.CommandText = getCategoryQuery;
-           using(MySqlDataReader reader=cmd.ExecuteReader()){
+            using (MySqlDataReader reader = cmd.ExecuteReader())
+            {
                 table.Load(reader);
-           }
-            return table;
-
+            }
+            return new Category(Convert.ToInt32(table.Rows[0]["CategoryID"]), Convert.ToString(table.Rows[0]["CategoryName"]), Convert.ToInt32(table.Rows[0]["BudgetLimit"]), getCurrentMonthUsedAmountFromDatabaseExpenseTable(Convert.ToInt32(table.Rows[0]["CategoryID"])));
         }
-        public static bool EditCurrentMonthUsedAmountToCategory(int amount,int categoryID){
+        public static bool EditCurrentMonthUsedAmountToCategory(int amount, int categoryID)
+        {
+            CategoryDictionary[""+AllCategoryId].CurrentMonthUsedAmount = CategoryDictionary["" + AllCategoryId].CurrentMonthUsedAmount + amount;
+            CategoryDictionary["" + categoryID].CurrentMonthUsedAmount = CategoryDictionary["" + categoryID].CurrentMonthUsedAmount + amount;
             string addAmountToCategoryQuery = $"update category set CurrentMonthUsedAmount=CurrentMonthUsedAmount+{amount} where CategoryID={categoryID};";
             ExcuteQuery(addAmountToCategoryQuery);
             string addAmountToAllCategoryQuery = $"update category set CurrentMonthUsedAmount=CurrentMonthUsedAmount+{amount} where CategoryID={1};";
             ExcuteQuery(addAmountToAllCategoryQuery);
             return true;
         }
-        // Add Expense
-
-        public static bool AddExpense(List<object> expense)
+        public static bool AddExpense(Expense expense)
         {
-            string addQuery = $"INSERT INTO expense (CategoryID, Amount, DateAndTime, Detail) VALUES ({int.Parse(expense[0].ToString())}, {int.Parse(expense[1].ToString())}, '{((DateTime)expense[2]).ToString("yyyy-MM-dd HH:mm:ss")}', '{expense[3].ToString()}');";
+            string addQuery = $"INSERT INTO expense (CategoryID, Amount, DateAndTime, Detail) VALUES ({expense.CategoryID}, {expense.Amount}, '{expense.DateAndTime.ToString("yyyy-MM-dd HH:mm:ss")}', '{expense.Detail.ToString()}');";
             ExcuteQuery(addQuery);
-            if (((DateTime)expense[2]).Month == DateTime.Now.Month && ((DateTime)expense[2]).Year == DateTime.Now.Year)
+            if (expense.DateAndTime.Month == DateTime.Now.Month && (expense.DateAndTime).Year == DateTime.Now.Year)
             {
-                EditCurrentMonthUsedAmountToCategory(int.Parse(expense[1].ToString()), int.Parse(expense[0].ToString()));
+                EditCurrentMonthUsedAmountToCategory( expense.Amount, expense.CategoryID);
             }
-
+            expense = getExpenseFromDataBase(expense.DateAndTime);
+            ExpenseDictionary.Add(expense.ExpenseID, expense);
             return true;
         }
-        public static bool AddExpense(string Details, int amount, DateTime dateTime, int categoryId)
+        public static Expense getExpenseFromDataBase(DateTime DateAndTime)
         {
-
-            string addQuery = $"INSERT INTO expense (CategoryID, Amount, DateAndTime, Detail) VALUES ({categoryId}, {amount}, '{dateTime.ToString("yyyy-MM-dd HH:mm:ss")}', '{Details}');";
-            cmd.CommandText = addQuery;
-            cmd.ExecuteNonQuery();
-            if (dateTime.Month == DateTime.Now.Month && (dateTime.Year == DateTime.Now.Year))
+            string getExpenseQuery = $"select expense.ExpenseID ,expense.CategoryID ,expense.Amount ,expense.DateAndTime,expense.Detail From expense left Join category on expense.CategoryID = category.CategoryID where expense.DateAndTime='{DateAndTime.ToString("yyyy-MM-dd HH:mm:ss")}';";
+            DataTable table = new DataTable();
+            cmd.CommandText = getExpenseQuery;
+            using (MySqlDataReader reader = cmd.ExecuteReader())
             {
-                EditCurrentMonthUsedAmountToCategory(amount, categoryId);
+                table.Load(reader);
             }
-            return true;
+            return new Expense(int.Parse(table.Rows[0]["ExpenseID"].ToString()), int.Parse(table.Rows[0]["CategoryID"].ToString()), int.Parse(table.Rows[0]["Amount"].ToString()), (DateTime)table.Rows[0]["DateAndTime"], table.Rows[0]["Detail"].ToString(), CategoryDictionary["" + int.Parse(table.Rows[0]["CategoryID"].ToString())].CategoryName);
         }
-      
-
-        //Update Expense
-
-        public static bool UpdateExpense(int id, int categoryID, int amount, DateTime dateTime, string Detail)
+        public static bool UpdateExpense(Expense expense)
         {
-           
-            string expenseUpdateQuery = $"update expense set CategoryID={categoryID}, Amount={amount},DateAndTime='{(dateTime).ToString("yyyy-MM-dd HH:mm:ss")}',Detail='{Detail}' where ExpenseID={id};";
+            ExpenseDictionary[expense.ExpenseID] = expense;
+            string expenseUpdateQuery = $"update expense set CategoryID={expense.CategoryID}, Amount={expense.Amount},DateAndTime='{expense.DateAndTime.ToString("yyyy-MM-dd HH:mm:ss")}',Detail='{expense.Detail.ToString()}' where ExpenseID={expense.ExpenseID};";
             cmd.CommandText = expenseUpdateQuery;
-            cmd.ExecuteNonQuery();
-            if (dateTime.Month == DateTime.Now.Month && dateTime.Year == DateTime.Now.Year)
-            {
-                EditCurrentMonthUsedAmountToCategory( amount, categoryID);
-            }
-            return true;
-        }
-        public static bool UpdateExpense(int id, List<object> expense)
-        {
-            string expenseUpdateQuery = $"update expense set CategoryID={int.Parse(expense[0].ToString())}, Amount={int.Parse(expense[1].ToString())},DateAndTime='{((DateTime)expense[2]).ToString("yyyy-MM-dd HH:mm:ss")}',Detail='{expense[3].ToString()}' where ExpenseID={id};";
-            cmd.CommandText = expenseUpdateQuery;
-            cmd.ExecuteNonQuery();
-            if (((DateTime)expense[2]).Month == DateTime.Now.Month && ((DateTime)expense[2]).Year == DateTime.Now.Year)
-            {
-              
-                EditCurrentMonthUsedAmountToCategory(int.Parse(expense[1].ToString()), int.Parse(expense[0].ToString()));
-            }
-            return true;
-        }
-
-        //Delete Expense
-
-        public static bool DeleteExpense(int expenseId)
-        {
-            Expense expense = GetExpenseById(expenseId);
-
-
-            string deleteQuery = $"delete From expense Where ExpenseId={expenseId}";
-            cmd.CommandText = deleteQuery;
             cmd.ExecuteNonQuery();
             if (expense.DateAndTime.Month == DateTime.Now.Month && expense.DateAndTime.Year == DateTime.Now.Year)
             {
-               
-                EditCurrentMonthUsedAmountToCategory(-expense.Amount, expense.CategoryID);
+                EditCurrentMonthUsedAmountToCategory(expense.Amount, expense.CategoryID);
             }
+
             return true;
         }
-        
-        //login information
-        public static  void LoginPasswordChange(string username,string password)
+        public static bool DeleteExpense(Expense expense)
         {
-            string passwordChangeQuery = $"update logininformation set LoginPassword='{password}',UpdatedDate='{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}' where LoginUsername='{username}' ";
-            ExcuteQuery(passwordChangeQuery);
+            string deleteQuery = $"delete From expense Where ExpenseId={expense.ExpenseID}";
+            cmd.CommandText = deleteQuery;
+            cmd.ExecuteNonQuery();
+
+            if (expense.DateAndTime.Month == DateTime.Now.Month && expense.DateAndTime.Year == DateTime.Now.Year)
+            {
+                EditCurrentMonthUsedAmountToCategory(-expense.Amount, expense.CategoryID);
+            }
+            ExpenseDictionary.Remove(expense.ExpenseID);
+            return true;
         }
-        public static void LoginDetailChange(string username, string password)
+        public static Dictionary<string, Category> GetCategorySource()
         {
-            string passwordChangeQuery = $"update logininformation set LoginPassword='{password}',LoginUsername='{username}',UpdatedDate='{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}' where id={1} ";
-            ExcuteQuery(passwordChangeQuery);
-        }
-        // Get Source
-
-
-        public static DataTable GetCategorySource(){
             DataTable table = new DataTable();
 
-            string categoryGetQuery = "select category.CategoryID as CategoryID,category.CategoryName as CategoryName,category.BudgetLimit as BudgetLimit,category.CurrentMonthUsedAmount as CurrentMonthUsedAmount from category LEFT JOIN expense ON expense.CategoryID = category.CategoryID order by category.CategoryID;";
+            string categoryGetQuery = "select category.CategoryID as CategoryID,category.CategoryName as CategoryName,category.BudgetLimit as BudgetLimit,category.CurrentMonthUsedAmount as CurrentMonthUsedAmount from category;";
             try
             {
                 using (MySqlCommand command = new MySqlCommand(categoryGetQuery, mySqlConnection))
@@ -306,29 +254,31 @@ namespace ExpenseTracker
                         table.Load(reader);
                     }
                 }
-                return table;
-            }
-            catch{
-                return null;
+                Dictionary<string, Category> categoryDictionary = new Dictionary<string, Category>();
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    int currentMonthAmount = 0;
+                    if (int.Parse(table.Rows[i]["CategoryID"].ToString()) != 1)
+                        currentMonthAmount = getCurrentMonthUsedAmountFromDatabaseExpenseTable(int.Parse(table.Rows[i]["CategoryID"].ToString()));
+                    else
+                        currentMonthAmount = getCurrentMonthUsedAmountFromDatabaseExpenseTable();
+             
+                        UpdategetCurrentMonthUsedAmount(int.Parse(table.Rows[i]["CategoryID"].ToString()), currentMonthAmount);
 
-            }         
-        }
-        public static DataTable LoginInformationSource()
-        {
-            DataTable dataTable = new DataTable();
-            string loginInformationGetQuery = "select logininformation.LoginUsername as Username, logininformation.LoginPassword as Password from logininformation";
-            using(MySqlCommand command = new MySqlCommand(loginInformationGetQuery, mySqlConnection))
-            {
-                using(MySqlDataReader reader = command.ExecuteReader())
-                { dataTable.Load(reader); }
+                    categoryDictionary.Add(""+int.Parse(table.Rows[i]["CategoryID"].ToString()), new Category(Convert.ToInt32(table.Rows[i]["CategoryID"]), Convert.ToString(table.Rows[i]["CategoryName"]), Convert.ToInt32(table.Rows[i]["BudgetLimit"]), currentMonthAmount));
+                }
+                return categoryDictionary;
             }
-            return dataTable;
+            catch (Exception e)
+            {
+                return null;
+            }
         }
-        public static DataTable GetExpenseSource()
+        public static Dictionary<int, Expense> GetExpenseSource()
         {
             DataTable table = new DataTable();
-
-            string expenseGetQuery= "select expense.ExpenseID as ExpenseID,category.CategoryID as CategoryID,category.CategoryName as CategoryName,expense.DateAndTime as DateAndTime,expense.Amount as Amount,expense.Detail as Details from expense Left JOIN category  ON  Expense.CategoryID= Category.CategoryID;";
+            Dictionary<int, Expense> ExpenseDictionary = new Dictionary<int, Expense>();
+            string expenseGetQuery = "select expense.ExpenseID as ExpenseID,category.CategoryID as CategoryID,expense.DateAndTime as DateAndTime,expense.Amount as Amount,expense.Detail as Detail from expense Left JOIN category  ON  Expense.CategoryID= Category.CategoryID order by DateAndTime desc ;";
             try
             {
                 using (MySqlCommand command = new MySqlCommand(expenseGetQuery, mySqlConnection))
@@ -337,13 +287,46 @@ namespace ExpenseTracker
                     {
                         table.Load(reader);
                     }
+                    for (int i = 0; i < table.Rows.Count; i++)
+                    {
+                        ExpenseDictionary.Add(int.Parse(table.Rows[i]["ExpenseID"].ToString()), new Expense(int.Parse(table.Rows[i]["ExpenseID"].ToString()), int.Parse(table.Rows[i]["CategoryID"].ToString()), int.Parse(table.Rows[i]["Amount"].ToString()), (DateTime)table.Rows[i]["DateAndTime"], table.Rows[i]["Detail"].ToString(), CategoryDictionary["" + int.Parse(table.Rows[i]["CategoryID"].ToString())].CategoryName));
+                    }
                 }
-                return table;
+                return ExpenseDictionary;
             }
-            catch
+            catch (Exception e)
             {
                 return null;
             }
+        }
+        public static void UpdategetCurrentMonthUsedAmount(int categoryId, int Amount)
+        {
+            string UpdategetCurrentMonthUsedAmountQuery = $" Update category set CurrentMonthUsedAmount={Amount} where CategoryId={categoryId}";
+           
+            ExcuteQuery(UpdategetCurrentMonthUsedAmountQuery);
+        }
+
+        //Login
+        public static DataTable LoginInformationSource()
+        {
+            DataTable dataTable = new DataTable();
+            string loginInformationGetQuery = "select logininformation.LoginUsername as Username, logininformation.LoginPassword as Password from logininformation";
+            using (MySqlCommand command = new MySqlCommand(loginInformationGetQuery, mySqlConnection))
+            {
+                using (MySqlDataReader reader = command.ExecuteReader())
+                { dataTable.Load(reader); }
+            }
+            return dataTable;
+        }
+        public static void LoginPasswordChange(string username, string password)
+        {
+            string passwordChangeQuery = $"update logininformation set LoginPassword='{password}',UpdatedDate='{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}' where LoginUsername='{username}' ";
+            ExcuteQuery(passwordChangeQuery);
+        }
+        public static void LoginDetailChange(string username, string password)
+        {
+            string passwordChangeQuery = $"update logininformation set LoginPassword='{password}',LoginUsername='{username}',UpdatedDate='{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}' where id={1} ";
+            ExcuteQuery(passwordChangeQuery);
         }
     }
 }

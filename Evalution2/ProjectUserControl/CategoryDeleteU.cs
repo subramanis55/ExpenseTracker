@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ExpenseTracker.Manager;
 
 namespace ExpenseTracker
 {
@@ -16,17 +17,19 @@ namespace ExpenseTracker
         public CategoryDeleteU()
         {
             InitializeComponent();
-            DataTable dataTable = ExpenseManager.GetCategorySource();
-            dataTable.Rows.RemoveAt(0);
-            for(int i=0;i < dataTable.Rows.Count;i++){
-            if (int.Parse(dataTable.Rows[i]["CategoryID"].ToString())==100){
-                    dataTable.Rows.RemoveAt(i);
+            List<Category> categories = ExpenseManager.CategoryDictionary.Values.ToList();
+            categories.RemoveAt(0);
+            for (int i = 0; i < categories.Count; i++)
+            {
+                if (categories[i].Id == ExpenseManager.OtherCategoryId)
+                {
+                    categories.RemoveAt(i);
                     break;
+                }
             }
-            }
-            categoryCB.DataSource = dataTable;
-            categoryCB.DisplayMember = "CategoryName";
-            categoryCB.ValueMember = "CategoryID";
+            categoryCB.DataSource = categories;
+            categoryCB.DisplayMember ="CategoryName";
+            categoryCB.ValueMember ="Id";
             removeBtn.Click+= RemoveBtnClick;
         }
 

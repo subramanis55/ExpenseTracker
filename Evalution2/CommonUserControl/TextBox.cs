@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,14 +14,14 @@ namespace ExpenseTracker
     public partial class TextBoxU : UserControl
     {
         private Font placeholderTextCenterFont = new Font(FontFamily.GenericSansSerif, 11);
-        private Font placeholderTextTopFont = new Font(FontFamily.GenericSansSerif, 9,FontStyle.Bold);
+        private Font placeholderTextTopFont = new Font(FontFamily.GenericSansSerif, 9, FontStyle.Bold);
         private Color placeholderLabelAtTopColor = Color.FromArgb(65, 125, 225);
         private Color placeholderLabelAtCenterColor = Color.FromArgb(130, 130, 130);
-        private Timer timer=new Timer();
+        private Timer timer = new Timer();
         private bool isPlaceholder;
         private bool isEnterMouse;
         private int borderRadius = 7;
-       
+
         public Color PlaceholderLabelAtTopColor
         {
             get
@@ -39,7 +38,7 @@ namespace ExpenseTracker
             get
             {
                 return placeholderLabelAtCenterColor;
-                
+
             }
             set
             {
@@ -49,12 +48,15 @@ namespace ExpenseTracker
             }
 
         }
-        public Font PlaceholderFont{
-        
-        set{
+        public Font PlaceholderFont
+        {
+
+            set
+            {
                 label.Font = value;
-        }
-        get{
+            }
+            get
+            {
                 return label.Font;
             }
         }
@@ -75,7 +77,7 @@ namespace ExpenseTracker
             get
             {
                 return textBox.Multiline;
-               
+
             }
             set
             {
@@ -91,7 +93,7 @@ namespace ExpenseTracker
             }
             set
             {
-                 textBox.Dock=value;
+                textBox.Dock = value;
             }
         }
         public override string Text
@@ -109,35 +111,36 @@ namespace ExpenseTracker
         {
             get
             {
-               return  textBox.UseSystemPasswordChar;
+                return textBox.UseSystemPasswordChar;
 
             }
             set
             {
                 textBox.UseSystemPasswordChar = value;
-                if(value)
-                {
-                    textBox.Multiline = false;
-                    textBox.Dock = DockStyle.None;
-                    TextBoxUResize(this, EventArgs.Empty);
-                }
-                else
-                {
-                    textBox.Multiline = true;
-                    textBox.Dock = DockStyle.Fill;
-                }
+                //if(value)
+                //{
+                //    textBox.Multiline = false;
+                //    textBox.Dock = DockStyle.None;
+                //    TextBoxUResize(this, EventArgs.Empty);
+                //}
+                //else
+                //{
+                //    textBox.Multiline = true;
+                //    textBox.Dock = DockStyle.Fill;
+                //}
 
             }
         }
         public char PasswordChar
         {
-            get
-            {
-                return textBox.PasswordChar;
-            }
             set
             {
                 textBox.PasswordChar = value;
+            }
+            get
+            {
+                return textBox.PasswordChar;
+
             }
         }
         public string TextBoxtext
@@ -145,12 +148,12 @@ namespace ExpenseTracker
             get
             {
                 return textBox.Text;
-                
+
             }
             set
             {
                 textBox.Text = value;
-                
+
             }
         }
         public string PlaceholderText
@@ -173,7 +176,7 @@ namespace ExpenseTracker
             }
             set
             {
-               
+
                 textBox.ForeColor = value;
             }
 
@@ -187,7 +190,7 @@ namespace ExpenseTracker
             }
             set
             {
-                 textBox.Font= value;
+                textBox.Font = value;
             }
         }
 
@@ -196,14 +199,14 @@ namespace ExpenseTracker
             get
             {
                 return placeholderTextCenterFont;
-                
+
             }
 
             set
             {
                 placeholderTextCenterFont = value;
-                if(isPlaceholder)
-                label.Font = value;
+                if (isPlaceholder)
+                    label.Font = value;
             }
         }
 
@@ -227,7 +230,7 @@ namespace ExpenseTracker
             get
             {
                 return borderRadius;
-               
+
             }
 
             set
@@ -263,12 +266,12 @@ namespace ExpenseTracker
             timer.Interval = 15;
             timer.Tick += PlaceholderMove;
             this.Paint += TextBoxUPaint;
-            Click+= Label1Click;
+            Click += Label1Click;
         }
-       
+
         private GraphicsPath GetGraphicsPath(Rectangle rect)
         {
-           
+
             GraphicsPath path = new GraphicsPath();
             path.StartFigure();
             path.AddArc(rect.X, rect.Y, borderRadius, borderRadius, 180, 90);
@@ -279,17 +282,18 @@ namespace ExpenseTracker
             return path;
         }
         private void TextBoxUPaint(object sender, PaintEventArgs e)
-        { var g= e.Graphics;
+        {
+            var g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             Color borderColor;
             if (isPlaceholder)
-                 borderColor = placeholderLabelAtCenterColor;
+                borderColor = placeholderLabelAtCenterColor;
             else
                 borderColor = placeholderLabelAtTopColor;
-            
-            using (Pen pen=new Pen(borderColor,2))
+
+            using (Pen pen = new Pen(borderColor, 2))
             {
-                g.DrawPath(pen,GetGraphicsPath(new Rectangle(ClientRectangle.Location.X + 3, ClientRectangle.Location.Y + 2, ClientRectangle.Width - 6, ClientRectangle.Height - 4)));
+                g.DrawPath(pen, GetGraphicsPath(new Rectangle(ClientRectangle.Location.X + 3, ClientRectangle.Location.Y + 2, ClientRectangle.Width - 6, ClientRectangle.Height - 4)));
             }
         }
 
@@ -297,8 +301,8 @@ namespace ExpenseTracker
         {
             if (isPlaceholder)
             {
-                TextBoxUGotFocus(this,EventArgs.Empty);
-               textBox.Focus();
+                TextBoxUGotFocus(this, EventArgs.Empty);
+                textBox.Focus();
             }
         }
 
@@ -310,12 +314,13 @@ namespace ExpenseTracker
         Point placeholderlocation;
         private void PlaceholderMove(object sender, EventArgs e)
         {
-            if (isPlaceholder == true&& (label.Location.X>0&& label.Location.Y>-3))
+            if (isPlaceholder == true && (label.Location.X > 0 && label.Location.Y > -3))
             {
-                label.Location=new Point(label.Location.X-1, label.Location.Y-2);
+                label.Location = new Point(label.Location.X - 1, label.Location.Y - 2);
             }
-            else if(isPlaceholder == false&& (label.Location.X < placeholderlocation.X && label.Location.Y< placeholderlocation.Y)){
-                label.Location = new Point(label.Location.X +1, label.Location.Y +2);
+            else if (isPlaceholder == false && (label.Location.X < placeholderlocation.X && label.Location.Y < placeholderlocation.Y))
+            {
+                label.Location = new Point(label.Location.X + 1, label.Location.Y + 2);
             }
             else
             {
@@ -328,16 +333,16 @@ namespace ExpenseTracker
         private void TextBoxULostFocus(object sender, EventArgs e)
         {
             Point temp_Point = PointToClient(Cursor.Position);
-         //   if (2 > temp_Point.X || temp_Point.X >= Width-2|| 2 >temp_Point.Y || temp_Point.Y>= Height-2)
-          //  {
-                if (textBox.Text==""|| textBox.Text == null)
-                {
+            //   if (2 > temp_Point.X || temp_Point.X >= Width-2|| 2 >temp_Point.Y || temp_Point.Y>= Height-2)
+            //  {
+            if (textBox.Text == "" || textBox.Text == null)
+            {
                 label.ForeColor = placeholderLabelAtCenterColor;
                 label.Font = placeholderTextCenterFont;
-                    timer.Start();
-                }
-          //  }
-           
+                timer.Start();
+            }
+            //  }
+
         }
 
         private void TextBoxUGotFocus(object sender, EventArgs e)
@@ -348,7 +353,7 @@ namespace ExpenseTracker
                 label.Font = placeholderTextTopFont;
                 timer.Start();
             }
-           
+
         }
 
         private void TextBoxUResize(object sender, EventArgs e)
@@ -359,17 +364,18 @@ namespace ExpenseTracker
                 Padding = new Padding(18, 15, Padding.Right, Padding.Bottom);
 
 
-            textBox.Width= Width-Padding.Left-Padding.Right;
-            textBox.Location= new Point(Padding.Left,Height/2-(textBox.Height/2));
+            textBox.Width = Width - Padding.Left - Padding.Right;
+            textBox.Location = new Point(Padding.Left, Height / 2 - (textBox.Height / 2));
             if (!textBox.UseSystemPasswordChar)
             {
-                placeholderlocation = new Point(textBox.Location.X + (textBox.Location.Y + (textBox.Height / 2 - label.Height / 2)) , 1+ Height / 2 - label.Height / 2);              
+                placeholderlocation = new Point(textBox.Location.X + (textBox.Location.Y + (textBox.Height / 2 - label.Height / 2)), 1 + Height / 2 - label.Height / 2);
             }
             else
             {
-                placeholderlocation = new Point(textBox.Location.X + (textBox.Location.Y + (textBox.Height / 2 - label.Height / 2)) , 1+ Height / 2 - label.Height / 2);              
+                placeholderlocation = new Point(textBox.Location.X + (textBox.Location.Y + (textBox.Height / 2 - label.Height / 2)), 1 + Height / 2 - label.Height / 2);
             }
             label.Location = placeholderlocation;
         }
     }
 }
+

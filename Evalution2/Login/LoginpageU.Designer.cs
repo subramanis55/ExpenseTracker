@@ -61,7 +61,7 @@
             this.loginLeftSidePB.Dock = System.Windows.Forms.DockStyle.Fill;
             this.loginLeftSidePB.Location = new System.Drawing.Point(10, 10);
             this.loginLeftSidePB.Name = "loginLeftSidePB";
-            this.loginLeftSidePB.Size = new System.Drawing.Size(837, 469);
+            this.loginLeftSidePB.Size = new System.Drawing.Size(803, 469);
             this.loginLeftSidePB.TabIndex = 0;
             this.loginLeftSidePB.TabStop = false;
             // 
@@ -75,7 +75,7 @@
             this.leftP.BottomRight = 60;
             this.leftP.Controls.Add(this.loginPageP);
             this.leftP.Dock = System.Windows.Forms.DockStyle.Right;
-            this.leftP.Location = new System.Drawing.Point(436, 10);
+            this.leftP.Location = new System.Drawing.Point(402, 10);
             this.leftP.Name = "leftP";
             this.leftP.Size = new System.Drawing.Size(411, 469);
             this.leftP.TabIndex = 2;
@@ -191,8 +191,8 @@
             this.passwordTB.Margin = new System.Windows.Forms.Padding(2);
             this.passwordTB.Multiline = false;
             this.passwordTB.Name = "passwordTB";
-            this.passwordTB.Padding = new System.Windows.Forms.Padding(20, 15, 8, 6);
-            this.passwordTB.PasswordChar = '●';
+            this.passwordTB.Padding = new System.Windows.Forms.Padding(18, 15, 8, 6);
+    
             this.passwordTB.PlaceholderFont = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.passwordTB.PlaceholderLabelAtCenterColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.passwordTB.PlaceholderLabelAtTopColor = System.Drawing.Color.Teal;
@@ -228,7 +228,7 @@
             this.usernameTB.Multiline = true;
             this.usernameTB.Name = "usernameTB";
             this.usernameTB.Padding = new System.Windows.Forms.Padding(18, 20, 8, 6);
-            this.usernameTB.PasswordChar = '\0';
+  
             this.usernameTB.PlaceholderFont = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.usernameTB.PlaceholderLabelAtCenterColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.usernameTB.PlaceholderLabelAtTopColor = System.Drawing.Color.Teal;
@@ -269,7 +269,7 @@
             this.Controls.Add(this.loginLeftSidePB);
             this.Name = "LoginpageU";
             this.Padding = new System.Windows.Forms.Padding(10);
-            this.Size = new System.Drawing.Size(857, 489);
+            this.Size = new System.Drawing.Size(823, 489);
             ((System.ComponentModel.ISupportInitialize)(this.loginLeftSidePB)).EndInit();
             this.leftP.ResumeLayout(false);
             this.loginPageP.ResumeLayout(false);

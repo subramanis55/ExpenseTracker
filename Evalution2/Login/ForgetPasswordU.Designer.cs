@@ -238,7 +238,7 @@
             this.usernameTB.Multiline = true;
             this.usernameTB.Name = "usernameTB";
             this.usernameTB.Padding = new System.Windows.Forms.Padding(18, 20, 8, 6);
-            this.usernameTB.PasswordChar = '\0';
+
             this.usernameTB.PlaceholderFont = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.usernameTB.PlaceholderLabelAtCenterColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.usernameTB.PlaceholderLabelAtTopColor = System.Drawing.Color.Teal;
@@ -265,7 +265,7 @@
             this.newPasswordTB.Multiline = false;
             this.newPasswordTB.Name = "newPasswordTB";
             this.newPasswordTB.Padding = new System.Windows.Forms.Padding(18, 15, 8, 6);
-            this.newPasswordTB.PasswordChar = '●';
+        
             this.newPasswordTB.PlaceholderFont = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.newPasswordTB.PlaceholderLabelAtCenterColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.newPasswordTB.PlaceholderLabelAtTopColor = System.Drawing.Color.Teal;
@@ -292,7 +292,7 @@
             this.confirmPasswordTB.Multiline = false;
             this.confirmPasswordTB.Name = "confirmPasswordTB";
             this.confirmPasswordTB.Padding = new System.Windows.Forms.Padding(18, 15, 8, 6);
-            this.confirmPasswordTB.PasswordChar = '●';
+       
             this.confirmPasswordTB.PlaceholderFont = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.confirmPasswordTB.PlaceholderLabelAtCenterColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.confirmPasswordTB.PlaceholderLabelAtTopColor = System.Drawing.Color.Teal;

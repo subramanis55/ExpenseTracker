@@ -20,7 +20,15 @@ namespace ExpenseTracker
         Timer timer=new Timer();
         private MoveDirection direction= MoveDirection.None;
         public event EventHandler OnMoveEnd;
-        
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
+        }
         public MoveDirection Direction
         {
             set

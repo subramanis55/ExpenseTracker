@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExpenseTracker.Manager;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -26,17 +27,17 @@ namespace ExpenseTracker
         private AddCategoryU addCategoryU;
         private CategoryDeleteU categaryDeleteU;
         private CategoryUpdateU categoryUpdateU;
-        private List<string> monthCBSource = new List<string>() {"None","January","February","March","April","May","June","July","August","September","October","November","December"};
-        private List<string> yearCBSource = new List<string>() {"None"};
-        private List<string> dayCBSource= new List<string>() { "None" };    
+        private List<string> monthCBSource = new List<string>() { "None", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+        private List<string> yearCBSource = new List<string>() { "None" };
+        private List<string> dayCBSource = new List<string>() { "None" };
         private bool isSelectAll;
-        public  static NotificationThrowManager notificationThrowManager = new NotificationThrowManager();
+        public static NotificationThrowManager notificationThrowManager = new NotificationThrowManager();
         private Timer startTimer = new Timer();
         public Form1()
         {
             InitializeComponent();
-         
-            typeof(Panel).InvokeMember("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.NonPublic,null, expenseDataGridViewP, new object[] { true });
+
+            typeof(Panel).InvokeMember("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.NonPublic, null, expenseDataGridViewP, new object[] { true });
             typeof(Panel).InvokeMember("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.NonPublic, null, tapViewP, new object[] { true });
             typeof(Panel).InvokeMember("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.NonPublic, null, panel18, new object[] { true });
             typeof(Panel).InvokeMember("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.NonPublic, null, mainP, new object[] { true });
@@ -63,7 +64,7 @@ namespace ExpenseTracker
             fromDatePicker.ValueChanged += FromDatePickerValueChanged;
             toDatePicker.ValueChanged += ToDatePickerValueChanged;
             this.FormClosed += Form1FormClosed;
-            
+
         }
 
         private void Form1FormClosed(object sender, FormClosedEventArgs e)
@@ -73,15 +74,16 @@ namespace ExpenseTracker
 
         private void ToDatePickerValueChanged(object sender, EventArgs e)
         {
-           if(toDatePicker.Value< fromDatePicker.Value){
+            if (toDatePicker.Value < fromDatePicker.Value)
+            {
                 toDatePicker.Value = fromDatePicker.Value;
-           }
+            }
         }
 
         private void FromDatePickerValueChanged(object sender, EventArgs e)
         {
-        if(toDatePicker.Value < fromDatePicker.Value)
-            toDatePicker.Value = fromDatePicker.Value;
+            if (toDatePicker.Value < fromDatePicker.Value)
+                toDatePicker.Value = fromDatePicker.Value;
         }
 
         private void StartApplication(object sender, EventArgs e)
@@ -92,43 +94,45 @@ namespace ExpenseTracker
 
         private void selectAllBtnClick(object sender, EventArgs e)
         {
-           if ( expenseDataGridViewP.Visible)
+            if (expenseDataGridViewP.Visible)
             {
                 foreach (DataGridViewRow row in expenseDataGridView.Rows)
                 {
-                    if(row.Visible)
-                    row.Selected = true;
+                    if (row.Visible)
+                        row.Selected = true;
                 }
             }
         }
 
         private void DataGridViewKeyDown(object sender, KeyEventArgs e)
         {
-        if(e.Control&&e.KeyCode==Keys.A&& (mainTabControl.SelectedTab== customDayViewPage|| mainTabControl.SelectedTab== mainTabControl.SelectedTab||mainTabControl.SelectedTab== expenseAddPage))
+            if (e.Control && e.KeyCode == Keys.A && (mainTabControl.SelectedTab == customDayViewPage || mainTabControl.SelectedTab == mainTabControl.SelectedTab || mainTabControl.SelectedTab == expenseAddPage))
             {
-         foreach(DataGridViewRow row in expenseDataGridView.Rows){
-                  if(row.Visible)
+                foreach (DataGridViewRow row in expenseDataGridView.Rows)
+                {
+                    if (row.Visible)
                         row.Selected = true;
-        }
-        }      
+                }
+            }
         }
 
-     private void TopPResize(object sender, EventArgs e)
+        private void TopPResize(object sender, EventArgs e)
         {
             expenseMangerLB.Location = new Point(topP.Width / 2 - expenseMangerLB.Width / 2, 15);
         }
 
         private void CutomDateViewFilterBtnClick(object sender, EventArgs e)
         {
-          
+
             DateTime fromDate = fromDatePicker.Value;
             DateTime toDate = toDatePicker.Value;
 
             for (int i = 0; i < expenseDataGridView.RowCount; i++)
             {
-            if(fromDate <= ((DateTime)expenseDataGridView.Rows[i].Cells["DateAndTime"].Value)&& toDate >= ((DateTime)expenseDataGridView.Rows[i].Cells["DateAndTime"].Value)&& (expenseDataGridView.Rows[i].Cells["CategoryID"].Value.ToString()== categoryGenralCB.SelectedValue.ToString()|| categoryGenralCB.SelectedValue.ToString()=="1")){
-               
-                  expenseDataGridView.Rows[i].Visible = true;
+                if (fromDate <= ((DateTime)expenseDataGridView.Rows[i].Cells["DateAndTime"].Value) && toDate >= ((DateTime)expenseDataGridView.Rows[i].Cells["DateAndTime"].Value) && (expenseDataGridView.Rows[i].Cells["CategoryID"].Value.ToString() == categoryGenralCB.SelectedValue.ToString() || categoryGenralCB.SelectedValue.ToString() == "1"))
+                {
+
+                    expenseDataGridView.Rows[i].Visible = true;
                 }
                 else
                 {
@@ -136,7 +140,7 @@ namespace ExpenseTracker
                     manager.SuspendBinding();
                     expenseDataGridView.Rows[i].Visible = false;
                     manager.ResumeBinding();
-                }          
+                }
             }
         }
 
@@ -145,19 +149,21 @@ namespace ExpenseTracker
             int totalCost = 0;
             for (int i = 0; i < expenseDataGridView.Rows.Count; i++)
             {
-            if(expenseDataGridView.Rows[i].Visible){
-                    totalCost += ExpenseManager.GetExpenseById(int.Parse(expenseDataGridView.Rows[i].Cells["ID"].Value.ToString())).Amount;
+                if (expenseDataGridView.Rows[i].Visible)
+                {
+                    totalCost += ((Expense)expenseDataGridView.Rows[i].DataBoundItem).Amount;
                 }
-              
+
             }
             totalCostDisplayLB.Text = totalCost + ".00 /-";
         }
-       
-        private void RefreshDayViewPageFilter(){
+
+        private void RefreshDayViewPageFilter()
+        {
             yearCBFilter.SelectedIndex = 0;
             monthCBFilter.SelectedIndex = 0;
             dayCBFilter.SelectedIndex = 0;
-           
+
             FilterBtnDayViewClick(this, EventArgs.Empty);
         }
         private void FilterBtnDayViewClick(object sender, EventArgs e)
@@ -176,8 +182,8 @@ namespace ExpenseTracker
 
             for (int i = 0; i < expenseDataGridView.RowCount; i++)
             {
-              //  var a = expenseDataGridView.Rows[i].Cells["DateAndTime"].Value;          
-               // MessageBox.Show(""+a.GetType());
+                //  var a = expenseDataGridView.Rows[i].Cells["DateAndTime"].Value;          
+                // MessageBox.Show(""+a.GetType());
                 isYearMatch = isMonthMatch = isDayMatch = false;
                 if (year == -1 || year == ((DateTime)expenseDataGridView.Rows[i].Cells["DateAndTime"].Value).Year)
                 {
@@ -192,10 +198,11 @@ namespace ExpenseTracker
                     isDayMatch = true;
                 }
                 if (isYearMatch && isMonthMatch && isDayMatch && (categoryGenralCB.SelectedValue.ToString() == expenseDataGridView.Rows[i].Cells["CategoryID"].Value.ToString() || categoryGenralCB.SelectedValue.ToString() == "1"))
-                {                  
+                {
                     expenseDataGridView.Rows[i].Visible = true;
                 }
-                else{
+                else
+                {
                     CurrencyManager manager = (CurrencyManager)BindingContext[expenseDataGridView.DataSource];
                     manager.SuspendBinding();
                     expenseDataGridView.Rows[i].Visible = false;
@@ -205,36 +212,41 @@ namespace ExpenseTracker
 
         }
 
-        private void RefreshGenCategory(){
+        private void RefreshGenCategory()
+        {
             CategoryenralCBSelectedIndexChanged(this, EventArgs.Empty);
         }
 
         //Add Expense
         private void AddExpenseBtnClick(object sender, EventArgs e)
         {
-            if (!isCategaryAddOn && !isCategaryAddOn)
+            if (!isCategaryAddOn )
             {
                 AddPage obj = new AddPage();
                 obj.OnSubmit += AddExpenseToDataBase;
                 obj.ShowDialog();
             }
+            else{
+                notificationThrowManager.CreateNotification($"Off the add category option\n before add expense", NotificationType.Warning);
+            }
         }
-        private void AddExpenseToDataBase(object sender, List<object> e)
+        private void AddExpenseToDataBase(object sender, Expense expense)
         {
             try
             {
-                ExpenseManager.AddExpense(e);
+                ExpenseManager.AddExpense(expense);
                 RefreshGenCategory();
                 Form obj = (Form)(sender);
                 obj.Dispose();
                 notificationThrowManager.CreateNotification("Expense added successful", NotificationType.None);
-                int categoryExceedAmount = ExpenseManager.GetCurrentMonthLimitExceedAmount(int.Parse(e[0].ToString()));
-                if (categoryExceedAmount > 0){
-                    notificationThrowManager.CreateNotification($"{ExpenseManager.FindCategoryName(int.Parse(e[0].ToString()))} Limit Exceed Over\n{categoryExceedAmount}", NotificationType.Warning);
+                int categoryExceedAmount = ExpenseManager.GetCurrentMonthLimitExceedAmount(expense.CategoryID);
+                if (categoryExceedAmount > 0)
+                {
+                    notificationThrowManager.CreateNotification($"{ExpenseManager.CategoryDictionary["" + expense.CategoryID].CategoryName} Limit Exceed Over\n{categoryExceedAmount}", NotificationType.Warning);
                 }
 
-                CategoryDataGridRefresh();
-                expenseDataGridRefresh();
+                CategoryDataGridViewRefresh();
+                ExpenseDataGridViewRefresh();
             }
             catch
             {
@@ -247,49 +259,50 @@ namespace ExpenseTracker
         private int editExpenseAmountValue;
         private int editExpenseCategoryId;
         private bool iseditincategory = false;
-        private void UpdateEditedExpenseInDataBase(object sender,List<object> expense)
+        private void UpdateEditedExpenseInDataBase(object sender, Expense expense)
         {
             try
             {
-                ExpenseManager.UpdateExpense(int.Parse(expenseDataGridView.Rows[expenseDataGridView.SelectedRows[0].Index].Cells["ID"].Value.ToString()), expense);
+                ExpenseManager.UpdateExpense(expense);
                 Form obj = (Form)sender;
                 obj.Dispose();
                 RefreshGenCategory();
                 notificationThrowManager.CreateNotification("Expense Updated successfully", NotificationType.None);
 
-               Expense expenseObj = ExpenseManager.GetExpenseById(int.Parse(expenseDataGridView.Rows[expenseDataGridView.SelectedRows[0].Index].Cells["ID"].Value.ToString()));
+                //   Expense expenseObj = ExpenseManager.GetExpenseById(int.Parse(expenseDataGridView.Rows[expenseDataGridView.SelectedRows[0].Index].Cells["ID"].Value.ToString()));
 
-                int categoryExceedAmount = ExpenseManager.GetCurrentMonthLimitExceedAmount(int.Parse(expense[0].ToString()));
+                int categoryExceedAmount = ExpenseManager.GetCurrentMonthLimitExceedAmount(expense.CategoryID);
                 if (categoryExceedAmount > 0)
                 {
-                    notificationThrowManager.CreateNotification($"{ExpenseManager.FindCategoryName(int.Parse(expense[0].ToString()))} Limit Exceed Over\n{categoryExceedAmount}", NotificationType.Warning);
+                    notificationThrowManager.CreateNotification($"{ExpenseManager.CategoryDictionary["" + expense.CategoryID].CategoryName} Limit Exceed Over\n{categoryExceedAmount}", NotificationType.Warning);
                 }
-                CategoryDataGridRefresh();
-                expenseDataGridRefresh();
+                CategoryDataGridViewRefresh();
+                ExpenseDataGridViewRefresh();
                 iseditincategory = false;
             }
-            catch
+            catch (Exception e)
             {
-
                 notificationThrowManager.CreateNotification("Invalid input", NotificationType.Error);
                 if (iseditincategory)
-                ExpenseManager.EditCurrentMonthUsedAmountToCategory(-editExpenseAmountValue, editExpenseCategoryId);
+                    ExpenseManager.EditCurrentMonthUsedAmountToCategory(-editExpenseAmountValue, editExpenseCategoryId);
             }
 
         }
         private void EditExpenseBtnClick(object sender, EventArgs e)
         {
-            if (expenseDataGridView.RowCount > 0&& expenseDataGridView.SelectedRows.Count>0)
+            if (expenseDataGridView.RowCount > 0 && expenseDataGridView.SelectedRows.Count > 0)
             {
-                Expense expense = ExpenseManager.GetExpenseById(int.Parse(expenseDataGridView.Rows[expenseDataGridView.SelectedRows[0].Index].Cells[0].Value.ToString()));
+                Expense expense = (Expense)expenseDataGridView.SelectedRows[0].DataBoundItem;
+
                 editExpenseAmountValue = expense.Amount;
                 editExpenseCategoryId = expense.CategoryID;
-                if(expense.DateAndTime.Month==DateTime.Now.Month&& expense.DateAndTime.Year == DateTime.Now.Year){
+                if (expense.DateAndTime.Month == DateTime.Now.Month && expense.DateAndTime.Year == DateTime.Now.Year)
+                {
                     ExpenseManager.EditCurrentMonthUsedAmountToCategory(-editExpenseAmountValue, editExpenseCategoryId);
-                    iseditincategory =true;
+                    iseditincategory = true;
                 }
-                 
-                AddPage obj = new AddPage(int.Parse(expenseDataGridView.Rows[expenseDataGridView.SelectedRows[0].Index].Cells["ID"].Value.ToString()));
+
+                AddPage obj = new AddPage(expense);
                 obj.OnSubmit += UpdateEditedExpenseInDataBase;
                 obj.ShowDialog();
             }
@@ -302,11 +315,11 @@ namespace ExpenseTracker
             {
                 for (int i = 0; i < expenseDataGridView.SelectedRows.Count; i++)
                 {
-                    ExpenseManager.DeleteExpense(int.Parse(expenseDataGridView.SelectedRows[i].Cells["ID"].Value.ToString()));
+                    ExpenseManager.DeleteExpense((Expense)(expenseDataGridView.SelectedRows[i].DataBoundItem));
                 }
-                // RefreshDayViewPageFilter();
-                CategoryDataGridRefresh();
-                expenseDataGridRefresh();
+
+                CategoryDataGridViewRefresh();
+                ExpenseDataGridViewRefresh();
             }
 
             Form obj = (Form)(sender);
@@ -318,13 +331,14 @@ namespace ExpenseTracker
             messageBox.OnClickResult += DeleteAllSelectedExpenseFromDataBase;
             messageBox.ShowDialog();
         }
-        private void DeleteOneSelectedExpenseFromDataBase(object sender,bool isYes)
+        private void DeleteOneSelectedExpenseFromDataBase(object sender, bool isYes)
         {
-        if(isYes){
-                ExpenseManager.DeleteExpense(int.Parse(expenseDataGridView.Rows[currentRowIndex].Cells["ID"].Value.ToString()));
+            if (isYes)
+            {
+                ExpenseManager.DeleteExpense((Expense)expenseDataGridView.Rows[currentRowIndex].DataBoundItem);
                 RefreshGenCategory();
-                CategoryDataGridRefresh();
-                expenseDataGridRefresh();
+                CategoryDataGridViewRefresh();
+                ExpenseDataGridViewRefresh();
             }
             Form obj = (Form)(sender);
             obj.Dispose();
@@ -357,19 +371,19 @@ namespace ExpenseTracker
                 }
             }
         }
-        public void AddCategory(object sender, List<object> categoryValues)
+        public void AddCategory(object sender, Category category)
         {
             try
             {
-                ExpenseManager.AddCategory((string)categoryValues[0], int.Parse((string)categoryValues[1]), ExpenseManager.CategoryList.Count - 1);
+                ExpenseManager.AddCategory(category);
                 Control control = (Control)sender;
                 control.Dispose();
                 addCategoryU = null;
                 //NotificationSent
-                notificationThrowManager.CreateNotification(categoryValues[0] + " Category added successfully", NotificationType.None);
+                notificationThrowManager.CreateNotification(category.CategoryName + " Category added successfully", NotificationType.None);
                 AddCategryBtnClick(this, EventArgs.Empty);
                 ComboBoxValueSet();
-                CategoryDataGridRefresh();
+                CategoryDataGridViewRefresh();
             }
             catch
             {
@@ -405,19 +419,19 @@ namespace ExpenseTracker
                 }
             }
         }
-        public void UpdateCategory(object sender, List<object> categoryValues)
+        public void UpdateCategory(object sender, Category category)
         {
             try
             {
-                ExpenseManager.UpdateCategory(int.Parse(categoryValues[0].ToString()), (string)categoryValues[1], int.Parse((string)categoryValues[2]));
+                ExpenseManager.UpdateCategory(category);
                 Control control = (Control)sender;
                 control.Dispose();
                 ComboBoxValueSet();
                 UpdateCategryBtnClick(this, EventArgs.Empty);
-                notificationThrowManager.CreateNotification((string)categoryValues[1] + " Category Updated successfully", NotificationType.None);
+                notificationThrowManager.CreateNotification(category.CategoryName + " Category Updated successfully", NotificationType.None);
                 ComboBoxValueSet();
-                expenseDataGridRefresh();
-                CategoryDataGridRefresh();
+                ExpenseDataGridViewRefresh();
+                CategoryDataGridViewRefresh();
 
 
             }
@@ -459,62 +473,47 @@ namespace ExpenseTracker
         {
             try
             {
-                string categoryName = ExpenseManager.FindCategoryName(categoryId);           
+                string categoryName = ExpenseManager.CategoryDictionary["" + categoryId].CategoryName;
                 ExpenseManager.DeleteCategory(categoryId);
                 notificationThrowManager.CreateNotification(categoryName + " Category removed successfully", NotificationType.None);
                 Control control = (Control)(sender);
-                control.Dispose();             
+                control.Dispose();
                 RemoveCategoryBtnClick(this, EventArgs.Empty);
                 categaryDeleteU = null;
                 ComboBoxValueSet();
-                expenseDataGridRefresh();
-                CategoryDataGridRefresh();
-                //int categoryExceedAmount = ExpenseManager.GetCurrentMonthLimitExceedAmount(100);
-                //if (categoryExceedAmount > 0)
-                //{
-                //    notificationThrowManager.CreateNotification($"{ExpenseManager.FindCategoryName(100)} Limit Exceed Over\n{categoryExceedAmount}", NotificationType.Warning);
-                //}
+                ExpenseDataGridViewRefresh();
+                CategoryDataGridViewRefresh();
+
             }
             catch
             {
-                notificationThrowManager.CreateNotification(ExpenseManager.FindCategoryName(categoryId) + " Category not exits ", NotificationType.Warning);
+                //notificationThrowManager.CreateNotification(ExpenseManager2.FindCategoryName(categoryId) + " Category not exits ", NotificationType.Warning);
             }
 
         }
 
-      
 
-        public void ComboBoxValueSet(){
-      
+
+        public void ComboBoxValueSet()
+        {
+
             categoryGenralCB.DataSource = null;
-         
-            DataTable tabel = ExpenseManager.GetCategorySource();
-            //tabel.AcceptChanges();
-            //for (int i = 0; i < tabel.Rows.Count; i++)
-            //{
-            //    if (tabel.Rows[i]["CategoryID"].ToString() == "100")
-            //    {
-            //        DataRow temp = tabel.Rows[i];
-            //        tabel.Rows.RemoveAt(i);
-            //        tabel.Rows.Add(temp);
-            //        break;
-            //    }
-            //}
-          
-            //tabel.Reset();
-            categoryGenralCB.DataSource = tabel;
+            List<Category> categoryComboboxSource = ExpenseManager.CategoryDictionary.Values.ToList();
+            for (int i = 0; i < categoryComboboxSource.Count; i++)
+            {
+                if (categoryComboboxSource[i].Id == ExpenseManager.OtherCategoryId)
+                {
+                    Category categrory = categoryComboboxSource[i];
+                    categoryComboboxSource.RemoveAt(i);
+                    categoryComboboxSource.Add(categrory);
+                }
+            }
+            categoryGenralCB.DataSource = ExpenseManager.CategoryDictionary.Values.ToList();
             categoryGenralCB.DisplayMember = "CategoryName";
-            categoryGenralCB.ValueMember = "CategoryID";
+            categoryGenralCB.ValueMember = "ID";
         }
-       
-        private void expenseDataGridRefresh(){
-          //  expenseDataGridView.Refresh();
-          //  expenseDataGridView.RefreshEdit();
-          //  expenseDataGridView.DataSource = null;
-            expenseDataGridView.DataSource = ExpenseManager.GetExpenseSource();
-            CategoryenralCBSelectedIndexChanged(this, EventArgs.Empty);
-        }
-       
+
+
         private void DataGridViewMouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -536,27 +535,28 @@ namespace ExpenseTracker
 
         }
 
-       
-        public int ExpenseBudgetMonthLimitCalculate(string categoryId,DateTime dateTime){
+
+        public int ExpenseBudgetMonthLimitCalculate(string categoryId, DateTime dateTime)
+        {
 
             int total = 0;
-           //// DateTime dateTime = DateTime.Now;
-           // for(int i=0;i<ExpenseManager.ExpenseList.Count;i++){
-           //     if (ExpenseManager.ExpenseList[i].CategoryId == categoryId && ExpenseManager.ExpenseList[i].DateAndTime.Month == dateTime.Month && ExpenseManager.ExpenseList[i].DateAndTime.Year == dateTime.Year)
-           //         total += ExpenseManager.ExpenseList[i].Amount;
-           // }
+            //// DateTime dateTime = DateTime.Now;
+            // for(int i=0;i<ExpenseManager.ExpenseList.Count;i++){
+            //     if (ExpenseManager.ExpenseList[i].CategoryId == categoryId && ExpenseManager.ExpenseList[i].DateAndTime.Month == dateTime.Month && ExpenseManager.ExpenseList[i].DateAndTime.Year == dateTime.Year)
+            //         total += ExpenseManager.ExpenseList[i].Amount;
+            // }
             return total;
         }
-       
+
 
         private void CategoryenralCBSelectedIndexChanged(object sender, EventArgs e)
         {
-           
-        if(categoryGenralCB.SelectedValue!=null)
+
+            if (categoryGenralCB.SelectedValue != null)
             {
                 for (int i = 0; i < expenseDataGridView.Rows.Count; i++)
                 {
-                   // MessageBox.Show(categoryGenralCB.GetItemText(categoryGenralCB.SelectedItem)+"  "+ expenseDataGridView.Rows[i].Cells[1].Value.ToString());
+                    // MessageBox.Show(categoryGenralCB.GetItemText(categoryGenralCB.SelectedItem)+"  "+ expenseDataGridView.Rows[i].Cells[1].Value.ToString());
                     if (expenseDataGridView.Rows[i].Cells["CategoryID"].Value.ToString() == categoryGenralCB.SelectedValue.ToString() || categoryGenralCB.SelectedValue.ToString() == "1")
                     {
                         expenseDataGridView.Rows[i].Visible = true;
@@ -570,26 +570,28 @@ namespace ExpenseTracker
                     }
                 }
             }
-            
 
-        }   
+
+        }
 
         private void ExpenseTrackerLoad(object sender, EventArgs e)
         {
-            
+            ExpenseManager.CategoryRefresh();
+            ExpenseManager.ExpenseRefresh();
+
+            DataGridviewRefresh();
             ComboBoxValueSet();
             categoryGenralCB.DisplayMember = "CategoryName";
-            categoryGenralCB.ValueMember = "CategoryID";
+            categoryGenralCB.ValueMember = "Id";
             startTimer.Start();
             TopPResize(this, EventArgs.Empty);
-        
-            categorydataGridView.DataSource = ExpenseManager.GetCategorySource();
-            expenseDataGridView.DataSource= ExpenseManager.GetExpenseSource();
-            expenseDataGridView.Columns["ID"].Visible = false;
-            expenseDataGridView.Columns["CategoryID"].Visible = false;
-            categorydataGridView.Columns[0].Visible = false;
-            expenseDataGridView.RowTemplate.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            expenseDataGridView.RowTemplate.Height = 50; 
+
+
+            expenseDataGridView.Columns[0].Visible = false;
+            expenseDataGridView.Columns[1].Visible = false;
+            categoryDataGridView.Columns[0].Visible = false;
+            //expenseDataGridView.RowTemplate.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            //expenseDataGridView.RowTemplate.Height = 50; 
 
             mainTabControl.ItemSize = new Size(0, 1);
             mainTabControl.SelectedTab = expenseAddPage;
@@ -597,18 +599,19 @@ namespace ExpenseTracker
             switchBtnSelected = expensePageBtn;
 
             //Date Combobox
-            for(int i=1950;i<=2050;i++){
-                yearCBSource.Add(""+i);
-            }
-            for (int i =1; i <=31; i++)
+            for (int i = 1950; i <= 2050; i++)
             {
-                dayCBSource.Add(""+i);
+                yearCBSource.Add("" + i);
+            }
+            for (int i = 1; i <= 31; i++)
+            {
+                dayCBSource.Add("" + i);
             }
             yearCBFilter.DataSource = yearCBSource;
             dayCBFilter.DataSource = dayCBSource;
             monthCBFilter.DataSource = monthCBSource;
-            
-               
+
+
             columsChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
             columsChart.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
             columsChart.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
@@ -617,33 +620,106 @@ namespace ExpenseTracker
             columsChart.ChartAreas[0].AxisY.MajorTickMark.Enabled = false;
             columsChart.ChartAreas[0].AxisX.MinorTickMark.Enabled = false;
             columsChart.ChartAreas[0].AxisY.MinorTickMark.Enabled = false;
-            CategoryDataGridRefresh();
-            RefreshGenCategory();
-        }
-       
-        private void CategoryDataGridRefresh()
-        {
-           // categorydataGridView.RefreshEdit();
-            categorydataGridView.DataSource = null;
-            categorydataGridView.DataSource = ExpenseManager.GetCategorySource();
 
+            RefreshGenCategory();
+
+                                                     
         }
+        public int NumSteps(string s)
+        {
+            int step = 0;
+            while (s != "1")
+            {
+                if (s[s.Length - 1] == '0')
+                {
+                    s = s.Substring(0,s.Length-1);
+                    //for (int i = 0; i < s.Length; i++)
+                    //{
+
+                    //    if (s[i] == '0')
+                    //    {
+                    //        s = s.Substring(0, i) + "1" + ((i + 1 < s.Length) ? s.Substring(i + 1) : "");
+                    //        break;
+                    //    }
+
+                    //}
+                }
+                else
+                {
+                    s = AddOne(s);
+                }
+                    step++;
+                }
+                return step;
+            }
+
+            public string AddOne(string s)
+            {
+                bool flag = false;
+                string temp = "";
+                int lsp = 1;
+                for (int i = s.Length - 1; i >= 0; i--)
+                {
+                    if (s[i] == '0' && lsp == 1)
+                    {
+                        return s.Substring(0, i) + "1" + temp;
+                    }
+                    else
+                    {
+                        temp = "0" + temp;
+                    }
+                }
+                return "1" + temp;
+            }
+            private void DataGridviewRefresh()
+            {
+                ExpenseDataGridViewRefresh();
+                CategoryDataGridViewRefresh();
+            }
+
+            private void CategoryDataGridViewRefresh()
+            {
+                categoryDataGridView.DataSource = null;
+                categoryDataGridView.DataSource = ExpenseManager.CategoryDictionary.Values.ToList();
+                categoryDataGridView.Columns[0].Visible = false;
+            }
+
+            private void ExpenseDataGridViewRefresh()
+            {
+
+                expenseDataGridView.DataSource = null;
+                expenseDataGridView.DataSource = ExpenseManager.ExpenseDictionary.Values.ToList();
+                try
+                {
+                    expenseDataGridView.Columns[0].Visible = false;
+                    expenseDataGridView.Columns[1].Visible = false;
+                }
+                catch
+                {
+
+                }
+                CategoryenralCBSelectedIndexChanged(this, EventArgs.Empty);
+            }
+
         private bool isMenuPanelVisible = false;
         public void MenuPanelVisible(object sender, EventArgs e)
         {
-           if(menuP.Width<300&&isMenuPanelVisible){
+            if (menuP.Width < 300 && isMenuPanelVisible)
+            {
                 menuP.Width += 30;
-           }
-           else if(menuP.Width > 0 &&!isMenuPanelVisible){
+            }
+            else if (menuP.Width > 0 && !isMenuPanelVisible)
+            {
                 menuP.Width -= 30;
             }
-           else{
-          
+            else
+            {
+
 
                 Timer timer = (Timer)(sender);
                 timer.Stop();
                 timer.Dispose();
-           }
+            }
 
         }
         private void MenuViewBtnClick(object sender, EventArgs e)
@@ -654,11 +730,12 @@ namespace ExpenseTracker
             //timer.Interval = 2;
             //timer.Tick += MenuPanelVisible;
             //timer.Start();
-          menuP.Visible =!menuP.Visible;
+            menuP.Visible = !menuP.Visible;
         }
         private void ExpensePageClick(object sender, EventArgs e)
         {
-        if (mainTabControl.SelectedTab!= expenseAddPage){
+            if (mainTabControl.SelectedTab != expenseAddPage)
+            {
                 switchBtnSelected.BackColor = Color.Transparent;
                 mainTabControl.SelectedTab = expenseAddPage;
                 expensePageBtn.BackColor = Color.FromArgb(230, 230, 230);
@@ -667,22 +744,22 @@ namespace ExpenseTracker
                 expenseDataGridViewP.BringToFront();
                 categoryChangeP.Visible = true;
                 commonOperationP.Visible = true;
-            }         
+            }
         }
-        private void DayViewBtnClick(object sender, EventArgs e)       
+        private void DayViewBtnClick(object sender, EventArgs e)
         {
             if (mainTabControl.SelectedTab != dayViewPage)
             {
                 switchBtnSelected.BackColor = Color.Transparent;
                 mainTabControl.SelectedTab = dayViewPage;
-                dayViewPageBtn.BackColor = Color.FromArgb(230,230,230);
+                dayViewPageBtn.BackColor = Color.FromArgb(230, 230, 230);
                 switchBtnSelected = dayViewPageBtn;
                 dayViewPage.Controls.Add(expenseDataGridViewP);
                 expenseDataGridViewP.BringToFront();
                 categoryChangeP.Visible = true;
                 commonOperationP.Visible = true;
             }
-         
+
         }
         private void CategoryPageBtnClick(object sender, EventArgs e)
         {
@@ -692,7 +769,7 @@ namespace ExpenseTracker
                 mainTabControl.SelectedTab = categoryPage;
                 settingPageBtn.BackColor = Color.FromArgb(230, 230, 230);
                 switchBtnSelected = settingPageBtn;
-              
+
                 categoryChangeP.Visible = false;
                 commonOperationP.Visible = false;
             }
@@ -724,26 +801,28 @@ namespace ExpenseTracker
                 DashBoardRefresh();
             }
         }
-        private void DashBoardRefresh(){
-          //  Series series = new Series();
-         //   doughnutChart.Series.Clear();
-          //  series.ChartType = SeriesChartType.Pie;
-           // series.Name = "Category";
-             // doughnutChart.Legends.Clear();
-             //doughnutChart.Legends.Add(new Legend("Legend"));
-             //doughnutChart.Legends["Legend"].Font = new System.Drawing.Font("Arial", 11f);
-            pieChart.MaximumSize = new Size(pieChart.Width+700, pieChart.Height+400);
+        private void DashBoardRefresh()
+        {
+            //  Series series = new Series();
+            //   doughnutChart.Series.Clear();
+            //  series.ChartType = SeriesChartType.Pie;
+            // series.Name = "Category";
+            // doughnutChart.Legends.Clear();
+            //doughnutChart.Legends.Add(new Legend("Legend"));
+            //doughnutChart.Legends["Legend"].Font = new System.Drawing.Font("Arial", 11f);
+            pieChart.MaximumSize = new Size(pieChart.Width + 700, pieChart.Height + 400);
             columsChart.Series[0].Points.Clear();
             pieChart.Series[0].Points.Clear();
             dougenutChart.Series[0].Points.Clear();
             //   series["PieLabelStyle"] = "Inside";
             //  series["PieLineColor"] = "Black";
             //   series["PieDrawingStyle"] = "SoftEdge";
-            for (int i = 1; i <categorydataGridView.RowCount; i++)
+            List<Category> categoryList = ExpenseManager.CategoryDictionary.Values.ToList();
+            for (int i = 1; i < categoryList.Count; i++)
             {
-                pieChart.Series[0].Points.AddXY(categorydataGridView.Rows[i].Cells["CategoryName"].Value.ToString(), int.Parse(categorydataGridView.Rows[i].Cells["CurrentMonthUsedAmount"].Value.ToString()));
-                columsChart.Series[0].Points.AddXY(categorydataGridView.Rows[i].Cells["CategoryName"].Value.ToString(), int.Parse(categorydataGridView.Rows[i].Cells["CurrentMonthUsedAmount"].Value.ToString()));
-                dougenutChart.Series[0].Points.AddXY(categorydataGridView.Rows[i].Cells["CategoryName"].Value.ToString(), int.Parse(categorydataGridView.Rows[i].Cells["CurrentMonthUsedAmount"].Value.ToString()));
+                pieChart.Series[0].Points.AddXY(categoryList[i].CategoryName, categoryList[i].CurrentMonthUsedAmount);
+                columsChart.Series[0].Points.AddXY(categoryList[i].CategoryName, categoryList[i].CurrentMonthUsedAmount);
+                dougenutChart.Series[0].Points.AddXY(categoryList[i].CategoryName, categoryList[i].CurrentMonthUsedAmount);
             }
             ChartArea chart = new ChartArea();
             chart.AxisX.Minimum = 1;
@@ -761,10 +840,8 @@ namespace ExpenseTracker
                 int total = 0;
                 for (int day = 1; day <= 31; day++)
                 {
-
                     for (int i = 0; i < expenseDataGridView.Rows.Count; i++)
                     {
-
                         if (((DateTime)expenseDataGridView.Rows[i].Cells["DateAndTime"].Value).Day == day && month == ((DateTime)expenseDataGridView.Rows[i].Cells["DateAndTime"].Value).Month && ((DateTime)expenseDataGridView.Rows[i].Cells["DateAndTime"].Value).Year == DateTime.Now.Year)
                         {
                             total += int.Parse(expenseDataGridView.Rows[i].Cells["Amount"].Value.ToString());
@@ -783,44 +860,6 @@ namespace ExpenseTracker
 
 
         }
-        private void panel6_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void tabSwitchMenuMouseEnter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel11_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void tabSwitchMenuMouseLeave(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void panel32_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void splitter1_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
-
-        private void lineChart_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
+     
     }
 }

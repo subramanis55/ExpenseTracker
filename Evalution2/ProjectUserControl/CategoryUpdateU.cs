@@ -7,51 +7,67 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ExpenseTracker.Manager;
 
 namespace ExpenseTracker
 {
     public partial class CategoryUpdateU : UserControl
     {
-        public EventHandler<List<object>> OnClickSave;
-       
+        public EventHandler<Category> OnClickSave;
+
         public CategoryUpdateU()
         {
             InitializeComponent();
 
-            DataTable dataTable = ExpenseManager.GetCategorySource();        
-            categoryCB.DataSource = dataTable;
+
+            categoryCB.DataSource = ExpenseManager.CategoryDictionary.Values.ToList();
             categoryCB.DisplayMember = "CategoryName";
-            categoryCB.ValueMember = "CategoryID";       
+            categoryCB.ValueMember = "Id";
             categoryCB.SelectedIndexChanged += CategoryCBValueMemberChanged;
             CategoryCBValueMemberChanged(this, EventArgs.Empty);
-           // categoryCB.SelectedValue = 1;
+            // categoryCB.SelectedValue = 1;
             SaveBtn.Click += SaveBtnClick;
         }
 
         private void SaveBtnClick(object sender, EventArgs e)
-        {       
-                //validate
-                OnClickSave?.Invoke(this, new List<object>(){categoryCB.SelectedValue, categaryNameTB.Text, limitTB.Text });
-                       
+        {
+            int limitAmount = 0;
+            try
+            {
+                limitAmount = int.Parse(limitTB.Text);
+                amountErrorLabel.Visible = false;
+            }
+            catch
+            {
+                amountErrorLabel.Visible = true;
+            }
+
+            if (categaryNameTB.Text == "")
+                categorynameErrorLabel.Visible = true;
+            else
+                categorynameErrorLabel.Visible = false;
+
+            if (categorynameErrorLabel.Visible == false && amountErrorLabel.Visible == false)
+                OnClickSave?.Invoke(this, new Category((int)categoryCB.SelectedValue, categaryNameTB.Text, limitAmount, ExpenseManager.CategoryDictionary["" + (int)categoryCB.SelectedValue].CurrentMonthUsedAmount));
         }
 
+
         private void CategoryCBValueMemberChanged(object sender, EventArgs e)
-        {     
-                if (categoryCB.DataSource != null)
+        {
+            if (categoryCB.DataSource != null)
+            {
+                if (categoryCB.SelectedIndex == 0 || (int)categoryCB.SelectedValue == ExpenseManager.OtherCategoryId)
                 {
-                if (categoryCB.SelectedIndex == 0 || (int)categoryCB.SelectedValue==100)
-                    {
-                        categaryNameTB.ReadOnly = true;
-                    }
-                    else
-                    {
-                        categaryNameTB.ReadOnly = false;
-                    }
-                   DataTable table = ExpenseManager.GetCategoryById(int.Parse(categoryCB.SelectedValue.ToString()));
-                    categaryNameTB.Text = table.Rows[0]["CategoryName"].ToString();
-                    limitTB.Text = "" + table.Rows[0]["BudgetLimit"].ToString();
-                }  
-       
+                    categaryNameTB.ReadOnly = true;
+                }
+                else
+                {
+                    categaryNameTB.ReadOnly = false;
+                }
+                categaryNameTB.Text = ExpenseManager.CategoryDictionary["" + ((int)categoryCB.SelectedValue)].CategoryName;
+                limitTB.Text = "" + ExpenseManager.CategoryDictionary["" + ((int)categoryCB.SelectedValue)].BudgetLimit;
+            }
+
         }
     }
 }

@@ -31,7 +31,7 @@
             this.NotificationFormTopP = new System.Windows.Forms.Panel();
             this.NotificationTypeLB = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.CancelBtn = new ExpenseTracker.CustomButton();
+            this.closeBtn = new System.Windows.Forms.Button();
             this.MainP = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.MessageLB = new System.Windows.Forms.Label();
@@ -77,32 +77,27 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.panel2.Controls.Add(this.CancelBtn);
+            this.panel2.Controls.Add(this.closeBtn);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel2.Location = new System.Drawing.Point(365, 2);
             this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(1);
             this.panel2.Size = new System.Drawing.Size(35, 33);
             this.panel2.TabIndex = 1;
             // 
-            // CancelBtn
+            // closeBtn
             // 
-            this.CancelBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(66)))), ((int)(((byte)(57)))));
-            this.CancelBtn.BackgroudColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(66)))), ((int)(((byte)(57)))));
-            this.CancelBtn.BorderColor = System.Drawing.Color.Transparent;
-            this.CancelBtn.BorderRadius1 = 1;
-            this.CancelBtn.BorderSize1 = 0;
-            this.CancelBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CancelBtn.FlatAppearance.BorderSize = 0;
-            this.CancelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CancelBtn.ForeColor = System.Drawing.Color.White;
-            this.CancelBtn.Image = global::ExpenseTracker.Properties.Resources.icons8_cancel_30;
-            this.CancelBtn.Location = new System.Drawing.Point(0, 0);
-            this.CancelBtn.Name = "CancelBtn";
-            this.CancelBtn.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
-            this.CancelBtn.Size = new System.Drawing.Size(35, 33);
-            this.CancelBtn.TabIndex = 0;
-            this.CancelBtn.TextColor = System.Drawing.Color.White;
-            this.CancelBtn.UseVisualStyleBackColor = false;
+            this.closeBtn.BackColor = System.Drawing.Color.Crimson;
+            this.closeBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.closeBtn.FlatAppearance.BorderSize = 0;
+            this.closeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.closeBtn.Image = global::ExpenseTracker.Properties.Resources.icons8_cancel_25__1_;
+            this.closeBtn.Location = new System.Drawing.Point(1, 1);
+            this.closeBtn.Name = "closeBtn";
+            this.closeBtn.Size = new System.Drawing.Size(33, 31);
+            this.closeBtn.TabIndex = 0;
+            this.closeBtn.UseVisualStyleBackColor = false;
+            this.closeBtn.Click += new System.EventHandler(this.CancelBtnOnClick);
             // 
             // MainP
             // 
@@ -113,7 +108,7 @@
             this.MainP.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainP.Location = new System.Drawing.Point(0, 0);
             this.MainP.Name = "MainP";
-            this.MainP.Size = new System.Drawing.Size(402, 135);
+            this.MainP.Size = new System.Drawing.Size(402, 140);
             this.MainP.TabIndex = 2;
             // 
             // panel6
@@ -123,7 +118,7 @@
             this.panel6.Location = new System.Drawing.Point(110, 37);
             this.panel6.Name = "panel6";
             this.panel6.Padding = new System.Windows.Forms.Padding(10, 25, 0, 0);
-            this.panel6.Size = new System.Drawing.Size(292, 89);
+            this.panel6.Size = new System.Drawing.Size(292, 94);
             this.panel6.TabIndex = 5;
             // 
             // MessageLB
@@ -143,7 +138,7 @@
             this.IconP.Dock = System.Windows.Forms.DockStyle.Left;
             this.IconP.Location = new System.Drawing.Point(0, 37);
             this.IconP.Name = "IconP";
-            this.IconP.Size = new System.Drawing.Size(110, 89);
+            this.IconP.Size = new System.Drawing.Size(110, 94);
             this.IconP.TabIndex = 3;
             // 
             // IconPB
@@ -159,7 +154,7 @@
             // 
             this.panel4.Controls.Add(this.IncreaseingP);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 126);
+            this.panel4.Location = new System.Drawing.Point(0, 131);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(402, 9);
             this.panel4.TabIndex = 2;
@@ -186,7 +181,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(402, 135);
+            this.ClientSize = new System.Drawing.Size(402, 140);
             this.Controls.Add(this.MainP);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "NotificationForm";
@@ -210,7 +205,7 @@
         #endregion
 
         private System.Windows.Forms.Panel NotificationFormTopP;
-        private CustomButton CancelBtn;
+       // private CustomButton CancelBtn;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label NotificationTypeLB;
       
@@ -222,5 +217,6 @@
         private System.Windows.Forms.Panel IconP;
         private System.Windows.Forms.PictureBox IconPB;
         private System.Windows.Forms.Panel IncreaseingP;
+        private System.Windows.Forms.Button closeBtn;
     }
 }

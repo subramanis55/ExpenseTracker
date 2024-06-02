@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExpenseTracker.Manager;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +13,7 @@ namespace ExpenseTracker
 {
     public partial class SignPageU : UserControl
     {
-       
+
         public event EventHandler OnSignUpBtnClick;
         public event EventHandler OnLoginLinkClick;
         public SignPageU()
@@ -22,8 +23,8 @@ namespace ExpenseTracker
             signUpBtn.Click += SignBtnClick;
             loginLinkLabel.Click += LoginLinkLabelClick;
             Resize += SignPageUResize;
-            SignPageUResize(this,EventArgs.Empty);
-            
+            SignPageUResize(this, EventArgs.Empty);
+
         }
 
         private void SignPageUResize(object sender, EventArgs e)
@@ -53,25 +54,25 @@ namespace ExpenseTracker
             OnLoginLinkClick?.Invoke(this, EventArgs.Empty);
 
         }
-       
+
         private void SignBtnClick(object sender, EventArgs e)
         {
             DataTable dt = ExpenseManager.LoginInformationSource();
             if (confirmPasswordTB.Text != newPasswordTB.Text)
             {
                 Form1.notificationThrowManager.CreateNotification("Password Miss Match", NotificationType.Error);
-           
+
 
             }
             else if (dt.Rows[0][0].ToString() != usernameTB.Text)
             {
                 Form1.notificationThrowManager.CreateNotification("Username Invalid", NotificationType.Error);
-             
+
             }
             else if ("" == usernameTB.Text || newPasswordTB.Text == "" || confirmPasswordTB.Text == "" || usernameTB.IsPlaceholder || newPasswordTB.IsPlaceholder || confirmPasswordTB.IsPlaceholder)
             {
                 Form1.notificationThrowManager.CreateNotification("Enter the Username and Password", NotificationType.Information);
-             
+
             }
             else
             {
@@ -80,7 +81,7 @@ namespace ExpenseTracker
                 OnSignUpBtnClick?.Invoke(sender, e);
             }
         }
-      
+
         private void PasswordShowCBCheckedChanged(object sender, EventArgs e)
         {
             if (PasswordShowCB.Checked == true)
@@ -89,13 +90,14 @@ namespace ExpenseTracker
                 newPasswordTB.UseSystemPasswordChar = false;
 
                 confirmPasswordTB.UseSystemPasswordChar = false;
+
             }
             else
             {
-             
-                    newPasswordTB.UseSystemPasswordChar = true;
-              
-                    confirmPasswordTB.UseSystemPasswordChar = true;
+
+                newPasswordTB.UseSystemPasswordChar = true;
+
+                confirmPasswordTB.UseSystemPasswordChar = true;
             }
         }
 
@@ -110,6 +112,21 @@ namespace ExpenseTracker
         }
 
         private void customPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void newPasswordTB_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxU1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxU2_Load(object sender, EventArgs e)
         {
 
         }

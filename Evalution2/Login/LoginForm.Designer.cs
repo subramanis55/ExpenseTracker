@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             this.mainP = new System.Windows.Forms.Panel();
             this.loginBackgorundMovingU1 = new ExpenseTracker.LoginBackgorundMovingU();
             this.ellipseControl1 = new ChatApplication.EllipseControl();
@@ -72,6 +73,7 @@
             this.Controls.Add(this.mainP);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "LoginForm";
             this.Padding = new System.Windows.Forms.Padding(8);

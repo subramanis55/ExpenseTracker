@@ -66,6 +66,7 @@
     <Compile Include="CommonUserControl\EllipseControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Manager\ExpenseManager.cs" />
     <Compile Include="ProjectUserControl\AddCategoryU.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -100,9 +101,7 @@
     <Compile Include="ProjectUserControl\ChartViewU.Designer.cs">
       <DependentUpon>ChartViewU.cs</DependentUpon>
     </Compile>
-    <Compile Include="CommonUserControl\CustomButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="CommonUserControl\CustomButton.cs" />
     <Compile Include="CommonUserControl\CustomPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -110,7 +109,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Manager\Classes\Expense.cs" />
-    <Compile Include="Manager\ExpenseManager.cs" />
     <Compile Include="Main\Form1.cs">
       <SubType>Form</SubType>
     </Compile>

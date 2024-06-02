@@ -106,7 +106,7 @@ namespace ExpenseTracker
             InitializeComponent();
             Invalidate();
             MessageLB.TextChanged += MessageLBTextChanged;
-            CancelBtn.Click += CancelBtnOnClick;
+          //  CancelBtn.Click += CancelBtnOnClick;
             MessageText = message;
             NotifyType = type;
             
@@ -254,5 +254,7 @@ namespace ExpenseTracker
             Control control = (Control)sender;
             OnEnd?.Invoke(this, args);
         }
+
+        
     }
 }

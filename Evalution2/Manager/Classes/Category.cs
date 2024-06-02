@@ -8,27 +8,39 @@ namespace ExpenseTracker
 {
     public class Category
     {
-        public string Id {
+        public int Id
+        {
             set;
             get;
         }
-        public string Name {
+        public string CategoryName
+        {
             set;
             get;
         }
-        public int Limit {
+        public int BudgetLimit
+        {
             set;
             get;
         }
-     public int CurrentUsedAmount{
+        public int CurrentMonthUsedAmount
+        {
             set;
             get;
-
-    }
-       public  Category(string id,string name,int limit){
+        }
+        public Category(int id, string name, int limit, int currentUsedAmount)
+        {
             Id = id;
-            Name = name;
-            Limit = limit;
+            CategoryName = name;
+            BudgetLimit = limit;
+            CurrentMonthUsedAmount = currentUsedAmount;
+        }
+        public Category( string name, int limit, int currentUsedAmount)
+        {
+
+            CategoryName = name;
+            BudgetLimit = limit;
+            CurrentMonthUsedAmount = currentUsedAmount;
         }
     }
 }

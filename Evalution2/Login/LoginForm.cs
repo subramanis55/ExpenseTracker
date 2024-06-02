@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExpenseTracker.Manager;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,15 +12,16 @@ using System.Windows.Forms;
 
 namespace ExpenseTracker
 {
-   
+
     public partial class LoginForm : Form
     {
-        private LoginpageU loginPageU=new LoginpageU() { Dock=DockStyle.Fill};
-        private SignPageU signPageU=new SignPageU() { Dock=DockStyle.Fill };
-        private ForgetPasswordU forgetPasswordU=new ForgetPasswordU() { Dock=DockStyle.Fill };
+        private LoginpageU loginPageU = new LoginpageU() { Dock = DockStyle.Fill };
+        private SignPageU signPageU = new SignPageU() { Dock = DockStyle.Fill };
+        private ForgetPasswordU forgetPasswordU = new ForgetPasswordU() { Dock = DockStyle.Fill };
         public LoginForm()
         {
             InitializeComponent();
+            DoubleBuffered = true;
             if (!ExpenseManager.DataBaseConnecting())
             {
                 ExpenseManager.DataBaseExitsCheck();
@@ -35,7 +37,7 @@ namespace ExpenseTracker
             forgetPasswordU.OnSubmitBtnClick += ForgetPasswordUOnSubmitBtnClick;
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.SetProperty | BindingFlags.Instance, null, mainP, new object[] { true });
 
-    }
+        }
 
         private void ForgetPasswordUOnSubmitBtnClick(object sender, EventArgs e)
         {
@@ -53,22 +55,22 @@ namespace ExpenseTracker
 
         private void LoginBackgorundMovingU1_OnMoveEnd(object sender, EventArgs e)
         {
-           if(loginBackgorundMovingU1.Direction == MoveDirection.Left)
+            if (loginBackgorundMovingU1.Direction == MoveDirection.Left)
             {
                 loginBackgorundMovingU1.Visible = false;
                 mainP.Controls.Add(signPageU);
             }
-           else if (loginBackgorundMovingU1.Direction == MoveDirection.Right)
+            else if (loginBackgorundMovingU1.Direction == MoveDirection.Right)
             {
                 loginBackgorundMovingU1.Visible = false;
                 mainP.Controls.Add(loginPageU);
             }
-           else if(loginBackgorundMovingU1.Direction == MoveDirection.Middle)
+            else if (loginBackgorundMovingU1.Direction == MoveDirection.Middle)
             {
                 loginBackgorundMovingU1.Visible = false;
                 mainP.Controls.Add(forgetPasswordU);
             }
-           else if(loginBackgorundMovingU1.Direction == MoveDirection.MiddleRight)
+            else if (loginBackgorundMovingU1.Direction == MoveDirection.MiddleRight)
             {
                 loginBackgorundMovingU1.Visible = false;
                 mainP.Controls.Add(loginPageU);
@@ -98,13 +100,11 @@ namespace ExpenseTracker
 
         private void LoginpageUOnLoginBtnClick(object sender, EventArgs e)
         {
-            
-                Form1 form1 = new Form1();
-                form1.Show();
+
+            Form1 form1 = new Form1();
+            form1.Show();
             this.Hide();
-           // this.Close();
-            
-           
+            // this.Close();
         }
 
         private void LoginpageUOnForgetPasswordLinkLabelClick(object sender, EventArgs e)

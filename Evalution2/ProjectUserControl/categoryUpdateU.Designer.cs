@@ -31,9 +31,11 @@
             this.panel18 = new System.Windows.Forms.Panel();
             this.categoryAddOrEditP = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.categorynameErrorLabel = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.categaryNameTB = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.amountErrorLabel = new System.Windows.Forms.Label();
             this.limitTB = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -57,7 +59,7 @@
             this.panel18.Location = new System.Drawing.Point(0, 0);
             this.panel18.Name = "panel18";
             this.panel18.Padding = new System.Windows.Forms.Padding(2);
-            this.panel18.Size = new System.Drawing.Size(357, 123);
+            this.panel18.Size = new System.Drawing.Size(381, 149);
             this.panel18.TabIndex = 9;
             // 
             // categoryAddOrEditP
@@ -69,20 +71,33 @@
             this.categoryAddOrEditP.Dock = System.Windows.Forms.DockStyle.Fill;
             this.categoryAddOrEditP.Location = new System.Drawing.Point(2, 2);
             this.categoryAddOrEditP.Name = "categoryAddOrEditP";
-            this.categoryAddOrEditP.Size = new System.Drawing.Size(238, 119);
+            this.categoryAddOrEditP.Size = new System.Drawing.Size(265, 145);
             this.categoryAddOrEditP.TabIndex = 10;
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.Transparent;
+            this.panel3.Controls.Add(this.categorynameErrorLabel);
             this.panel3.Controls.Add(this.label11);
             this.panel3.Controls.Add(this.categaryNameTB);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 39);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(3);
-            this.panel3.Size = new System.Drawing.Size(238, 45);
+            this.panel3.Size = new System.Drawing.Size(265, 54);
             this.panel3.TabIndex = 12;
+            // 
+            // categorynameErrorLabel
+            // 
+            this.categorynameErrorLabel.AutoSize = true;
+            this.categorynameErrorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.categorynameErrorLabel.ForeColor = System.Drawing.Color.Red;
+            this.categorynameErrorLabel.Location = new System.Drawing.Point(119, 32);
+            this.categorynameErrorLabel.Name = "categorynameErrorLabel";
+            this.categorynameErrorLabel.Size = new System.Drawing.Size(143, 15);
+            this.categorynameErrorLabel.TabIndex = 12;
+            this.categorynameErrorLabel.Text = "Enter the  category name";
+            this.categorynameErrorLabel.Visible = false;
             // 
             // label11
             // 
@@ -91,9 +106,9 @@
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.Location = new System.Drawing.Point(3, 3);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(48, 18);
+            this.label11.Size = new System.Drawing.Size(109, 18);
             this.label11.TabIndex = 8;
-            this.label11.Text = "Name";
+            this.label11.Text = "Category name";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // categaryNameTB
@@ -101,9 +116,9 @@
             this.categaryNameTB.BackColor = System.Drawing.Color.WhiteSmoke;
             this.categaryNameTB.Dock = System.Windows.Forms.DockStyle.Right;
             this.categaryNameTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.categaryNameTB.Location = new System.Drawing.Point(102, 3);
+            this.categaryNameTB.Location = new System.Drawing.Point(122, 3);
             this.categaryNameTB.Name = "categaryNameTB";
-            this.categaryNameTB.Size = new System.Drawing.Size(133, 26);
+            this.categaryNameTB.Size = new System.Drawing.Size(140, 26);
             this.categaryNameTB.TabIndex = 6;
             this.categaryNameTB.TabStop = false;
             this.categaryNameTB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -111,23 +126,36 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Transparent;
+            this.panel2.Controls.Add(this.amountErrorLabel);
             this.panel2.Controls.Add(this.limitTB);
             this.panel2.Controls.Add(this.label12);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 84);
+            this.panel2.Location = new System.Drawing.Point(0, 93);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(3);
-            this.panel2.Size = new System.Drawing.Size(238, 35);
+            this.panel2.Size = new System.Drawing.Size(265, 52);
             this.panel2.TabIndex = 11;
+            // 
+            // amountErrorLabel
+            // 
+            this.amountErrorLabel.AutoSize = true;
+            this.amountErrorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.amountErrorLabel.ForeColor = System.Drawing.Color.Red;
+            this.amountErrorLabel.Location = new System.Drawing.Point(126, 31);
+            this.amountErrorLabel.Name = "amountErrorLabel";
+            this.amountErrorLabel.Size = new System.Drawing.Size(72, 15);
+            this.amountErrorLabel.TabIndex = 11;
+            this.amountErrorLabel.Text = "Invalid Input";
+            this.amountErrorLabel.Visible = false;
             // 
             // limitTB
             // 
             this.limitTB.BackColor = System.Drawing.Color.WhiteSmoke;
             this.limitTB.Dock = System.Windows.Forms.DockStyle.Right;
             this.limitTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.limitTB.Location = new System.Drawing.Point(102, 3);
+            this.limitTB.Location = new System.Drawing.Point(122, 3);
             this.limitTB.Name = "limitTB";
-            this.limitTB.Size = new System.Drawing.Size(133, 26);
+            this.limitTB.Size = new System.Drawing.Size(140, 26);
             this.limitTB.TabIndex = 7;
             this.limitTB.TabStop = false;
             this.limitTB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -152,7 +180,7 @@
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
             this.panel5.Padding = new System.Windows.Forms.Padding(15, 4, 15, 2);
-            this.panel5.Size = new System.Drawing.Size(238, 39);
+            this.panel5.Size = new System.Drawing.Size(265, 39);
             this.panel5.TabIndex = 8;
             // 
             // categoryCB
@@ -164,7 +192,7 @@
             this.categoryCB.Location = new System.Drawing.Point(15, 4);
             this.categoryCB.MaxDropDownItems = 12;
             this.categoryCB.Name = "categoryCB";
-            this.categoryCB.Size = new System.Drawing.Size(208, 28);
+            this.categoryCB.Size = new System.Drawing.Size(235, 28);
             this.categoryCB.TabIndex = 7;
             // 
             // panel1
@@ -172,10 +200,10 @@
             this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.Controls.Add(this.SaveBtn);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(240, 2);
+            this.panel1.Location = new System.Drawing.Point(267, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(4);
-            this.panel1.Size = new System.Drawing.Size(115, 119);
+            this.panel1.Padding = new System.Windows.Forms.Padding(8, 4, 4, 4);
+            this.panel1.Size = new System.Drawing.Size(112, 145);
             this.panel1.TabIndex = 10;
             // 
             // SaveBtn
@@ -187,9 +215,9 @@
             this.SaveBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SaveBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SaveBtn.ForeColor = System.Drawing.Color.White;
-            this.SaveBtn.Location = new System.Drawing.Point(4, 89);
+            this.SaveBtn.Location = new System.Drawing.Point(8, 115);
             this.SaveBtn.Name = "SaveBtn";
-            this.SaveBtn.Size = new System.Drawing.Size(107, 26);
+            this.SaveBtn.Size = new System.Drawing.Size(100, 26);
             this.SaveBtn.TabIndex = 7;
             this.SaveBtn.Text = "Save";
             this.SaveBtn.UseVisualStyleBackColor = false;
@@ -200,7 +228,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel18);
             this.Name = "CategoryUpdateU";
-            this.Size = new System.Drawing.Size(357, 123);
+            this.Size = new System.Drawing.Size(381, 149);
             this.panel18.ResumeLayout(false);
             this.categoryAddOrEditP.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
@@ -227,5 +255,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button SaveBtn;
+        private System.Windows.Forms.Label amountErrorLabel;
+        private System.Windows.Forms.Label categorynameErrorLabel;
     }
 }
