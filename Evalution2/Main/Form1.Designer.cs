@@ -128,14 +128,14 @@
             this.panel34 = new System.Windows.Forms.Panel();
             this.addCategryBtn = new ExpenseTracker.CustomButton();
             this.categoryChangeP = new System.Windows.Forms.Panel();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.deleteBtn = new ExpenseTracker.CustomButton();
             this.panel10 = new System.Windows.Forms.Panel();
             this.selectAllBtn = new ExpenseTracker.CustomButton();
             this.panel7 = new System.Windows.Forms.Panel();
             this.editBtn = new ExpenseTracker.CustomButton();
-            this.panel13 = new System.Windows.Forms.Panel();
-            this.label11 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.categoryGenralCB = new System.Windows.Forms.ComboBox();
             this.panel8 = new System.Windows.Forms.Panel();
@@ -204,10 +204,10 @@
             this.panel35.SuspendLayout();
             this.panel34.SuspendLayout();
             this.categoryChangeP.SuspendLayout();
+            this.panel13.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel10.SuspendLayout();
             this.panel7.SuspendLayout();
-            this.panel13.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel8.SuspendLayout();
             this.commonOperationP.SuspendLayout();
@@ -1364,6 +1364,27 @@
             this.categoryChangeP.Size = new System.Drawing.Size(823, 89);
             this.categoryChangeP.TabIndex = 6;
             // 
+            // panel13
+            // 
+            this.panel13.Controls.Add(this.label11);
+            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel13.Location = new System.Drawing.Point(501, 5);
+            this.panel13.Name = "panel13";
+            this.panel13.Padding = new System.Windows.Forms.Padding(10, 44, 10, 15);
+            this.panel13.Size = new System.Drawing.Size(136, 79);
+            this.panel13.TabIndex = 5;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(53, 44);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(73, 20);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Category";
+            // 
             // panel9
             // 
             this.panel9.Controls.Add(this.deleteBtn);
@@ -1458,27 +1479,6 @@
             this.editBtn.Text = "Edit";
             this.editBtn.TextColor = System.Drawing.Color.White;
             this.editBtn.UseVisualStyleBackColor = false;
-            // 
-            // panel13
-            // 
-            this.panel13.Controls.Add(this.label11);
-            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel13.Location = new System.Drawing.Point(501, 5);
-            this.panel13.Name = "panel13";
-            this.panel13.Padding = new System.Windows.Forms.Padding(10, 44, 10, 15);
-            this.panel13.Size = new System.Drawing.Size(136, 79);
-            this.panel13.TabIndex = 5;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Dock = System.Windows.Forms.DockStyle.Right;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(53, 44);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(73, 20);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "Category";
             // 
             // panel2
             // 
@@ -1891,11 +1891,11 @@
             this.panel35.ResumeLayout(false);
             this.panel34.ResumeLayout(false);
             this.categoryChangeP.ResumeLayout(false);
+            this.panel13.ResumeLayout(false);
+            this.panel13.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
-            this.panel13.ResumeLayout(false);
-            this.panel13.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.commonOperationP.ResumeLayout(false);

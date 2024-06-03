@@ -156,5 +156,10 @@ namespace ExpenseTracker
         {
                 
         }
+
+        private void categoryCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            submitBtn.Focus();
+        }
     }
 }

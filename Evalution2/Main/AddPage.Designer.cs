@@ -226,6 +226,7 @@
             this.categoryCB.Name = "categoryCB";
             this.categoryCB.Size = new System.Drawing.Size(196, 29);
             this.categoryCB.TabIndex = 1;
+            this.categoryCB.SelectedIndexChanged += new System.EventHandler(this.categoryCB_SelectedIndexChanged);
             // 
             // panel3
             // 

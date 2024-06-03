@@ -570,6 +570,7 @@ namespace ExpenseTracker
                     }
                 }
             }
+            totalCost.Focus();
 
 
         }
@@ -599,7 +600,7 @@ namespace ExpenseTracker
             switchBtnSelected = expensePageBtn;
 
             //Date Combobox
-            for (int i = 1950; i <= 2050; i++)
+            for (int i = 1950; i <= DateTime.Now.Year; i++)
             {
                 yearCBSource.Add("" + i);
             }
@@ -625,52 +626,7 @@ namespace ExpenseTracker
 
                                                      
         }
-        public int NumSteps(string s)
-        {
-            int step = 0;
-            while (s != "1")
-            {
-                if (s[s.Length - 1] == '0')
-                {
-                    s = s.Substring(0,s.Length-1);
-                    //for (int i = 0; i < s.Length; i++)
-                    //{
-
-                    //    if (s[i] == '0')
-                    //    {
-                    //        s = s.Substring(0, i) + "1" + ((i + 1 < s.Length) ? s.Substring(i + 1) : "");
-                    //        break;
-                    //    }
-
-                    //}
-                }
-                else
-                {
-                    s = AddOne(s);
-                }
-                    step++;
-                }
-                return step;
-            }
-
-            public string AddOne(string s)
-            {
-                bool flag = false;
-                string temp = "";
-                int lsp = 1;
-                for (int i = s.Length - 1; i >= 0; i--)
-                {
-                    if (s[i] == '0' && lsp == 1)
-                    {
-                        return s.Substring(0, i) + "1" + temp;
-                    }
-                    else
-                    {
-                        temp = "0" + temp;
-                    }
-                }
-                return "1" + temp;
-            }
+      
             private void DataGridviewRefresh()
             {
                 ExpenseDataGridViewRefresh();

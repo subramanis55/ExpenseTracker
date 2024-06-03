@@ -67,6 +67,7 @@ namespace ExpenseTracker
                 categaryNameTB.Text = ExpenseManager.CategoryDictionary["" + ((int)categoryCB.SelectedValue)].CategoryName;
                 limitTB.Text = "" + ExpenseManager.CategoryDictionary["" + ((int)categoryCB.SelectedValue)].BudgetLimit;
             }
+            SaveBtn.Focus();
 
         }
     }

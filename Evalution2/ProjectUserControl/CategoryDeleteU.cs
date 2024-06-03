@@ -38,5 +38,10 @@ namespace ExpenseTracker
             
             onClickRemove.Invoke(this, (int)categoryCB.SelectedValue);
         }
+
+        private void categoryCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            removeBtn.Focus();
+        }
     }
 }
