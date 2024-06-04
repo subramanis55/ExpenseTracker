@@ -38,10 +38,10 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -59,17 +59,18 @@
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.dashBoardPage = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel37 = new System.Windows.Forms.Panel();
             this.lineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.splitter3 = new System.Windows.Forms.Splitter();
             this.panel32 = new System.Windows.Forms.Panel();
             this.dougenutChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.panel15 = new System.Windows.Forms.Panel();
+            this.panel17 = new System.Windows.Forms.Panel();
+            this.pieChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel14 = new System.Windows.Forms.Panel();
             this.columsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.panel17 = new System.Windows.Forms.Panel();
-            this.pieChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.expenseAddPage = new System.Windows.Forms.TabPage();
             this.expenseDataGridViewP = new System.Windows.Forms.Panel();
             this.expenseDataGridView = new System.Windows.Forms.DataGridView();
@@ -166,14 +167,15 @@
             this.mainTabControl.SuspendLayout();
             this.dashBoardPage.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel37.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lineChart)).BeginInit();
             this.panel32.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dougenutChart)).BeginInit();
             this.panel15.SuspendLayout();
-            this.panel14.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.columsChart)).BeginInit();
             this.panel17.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pieChart)).BeginInit();
+            this.panel14.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.columsChart)).BeginInit();
             this.expenseAddPage.SuspendLayout();
             this.expenseDataGridViewP.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.expenseDataGridView)).BeginInit();
@@ -281,7 +283,7 @@
             // dashBoardPage
             // 
             this.dashBoardPage.AutoScroll = true;
-            this.dashBoardPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.dashBoardPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(247)))), ((int)(((byte)(247)))));
             this.dashBoardPage.Controls.Add(this.panel1);
             this.dashBoardPage.Location = new System.Drawing.Point(4, 7);
             this.dashBoardPage.Name = "dashBoardPage";
@@ -291,9 +293,7 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.lineChart);
-            this.panel1.Controls.Add(this.splitter3);
-            this.panel1.Controls.Add(this.panel32);
+            this.panel1.Controls.Add(this.panel37);
             this.panel1.Controls.Add(this.splitter2);
             this.panel1.Controls.Add(this.panel15);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -301,6 +301,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(778, 1000);
             this.panel1.TabIndex = 5;
+            // 
+            // panel37
+            // 
+            this.panel37.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.panel37.Controls.Add(this.lineChart);
+            this.panel37.Controls.Add(this.splitter3);
+            this.panel37.Controls.Add(this.panel32);
+            this.panel37.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel37.Location = new System.Drawing.Point(0, 337);
+            this.panel37.Name = "panel37";
+            this.panel37.Size = new System.Drawing.Size(778, 663);
+            this.panel37.TabIndex = 4;
             // 
             // lineChart
             // 
@@ -320,7 +332,7 @@
             chartArea1.IsSameFontSizeForAllAxes = true;
             chartArea1.Name = "ChartArea1";
             this.lineChart.ChartAreas.Add(chartArea1);
-            this.lineChart.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lineChart.Dock = System.Windows.Forms.DockStyle.Fill;
             legend1.AutoFitMinFontSize = 9;
             legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Left;
             legend1.Enabled = false;
@@ -329,7 +341,7 @@
             legend1.ItemColumnSpacing = 20;
             legend1.Name = "Legend1";
             this.lineChart.Legends.Add(legend1);
-            this.lineChart.Location = new System.Drawing.Point(0, 652);
+            this.lineChart.Location = new System.Drawing.Point(0, 286);
             this.lineChart.Margin = new System.Windows.Forms.Padding(2);
             this.lineChart.Name = "lineChart";
             series1.ChartArea = "ChartArea1";
@@ -343,7 +355,7 @@
             series1.XAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
             series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
             this.lineChart.Series.Add(series1);
-            this.lineChart.Size = new System.Drawing.Size(778, 348);
+            this.lineChart.Size = new System.Drawing.Size(778, 377);
             this.lineChart.TabIndex = 0;
             this.lineChart.Text = "chart1";
             title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -353,22 +365,24 @@
             // 
             // splitter3
             // 
+            this.splitter3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(247)))), ((int)(((byte)(247)))));
             this.splitter3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitter3.Location = new System.Drawing.Point(0, 645);
+            this.splitter3.Location = new System.Drawing.Point(0, 270);
             this.splitter3.Name = "splitter3";
-            this.splitter3.Size = new System.Drawing.Size(778, 7);
+            this.splitter3.Size = new System.Drawing.Size(778, 16);
             this.splitter3.TabIndex = 4;
             this.splitter3.TabStop = false;
             // 
             // panel32
             // 
+            this.panel32.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(247)))), ((int)(((byte)(247)))));
             this.panel32.Controls.Add(this.dougenutChart);
             this.panel32.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel32.Location = new System.Drawing.Point(0, 323);
+            this.panel32.Location = new System.Drawing.Point(0, 0);
             this.panel32.Margin = new System.Windows.Forms.Padding(2);
             this.panel32.Name = "panel32";
             this.panel32.Padding = new System.Windows.Forms.Padding(15, 16, 15, 16);
-            this.panel32.Size = new System.Drawing.Size(778, 322);
+            this.panel32.Size = new System.Drawing.Size(778, 270);
             this.panel32.TabIndex = 3;
             // 
             // dougenutChart
@@ -396,7 +410,7 @@
             series2.Name = "Series1";
             series2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.BrightPastel;
             this.dougenutChart.Series.Add(series2);
-            this.dougenutChart.Size = new System.Drawing.Size(748, 290);
+            this.dougenutChart.Size = new System.Drawing.Size(748, 238);
             this.dougenutChart.TabIndex = 0;
             this.dougenutChart.Text = "chart1";
             // 
@@ -405,16 +419,16 @@
             this.splitter2.Dock = System.Windows.Forms.DockStyle.Top;
             this.splitter2.Location = new System.Drawing.Point(0, 316);
             this.splitter2.Name = "splitter2";
-            this.splitter2.Size = new System.Drawing.Size(778, 7);
+            this.splitter2.Size = new System.Drawing.Size(778, 21);
             this.splitter2.TabIndex = 3;
             this.splitter2.TabStop = false;
             // 
             // panel15
             // 
             this.panel15.BackColor = System.Drawing.Color.Transparent;
+            this.panel15.Controls.Add(this.panel17);
             this.panel15.Controls.Add(this.splitter1);
             this.panel15.Controls.Add(this.panel14);
-            this.panel15.Controls.Add(this.panel17);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel15.Location = new System.Drawing.Point(0, 0);
             this.panel15.Name = "panel15";
@@ -422,10 +436,71 @@
             this.panel15.Size = new System.Drawing.Size(778, 316);
             this.panel15.TabIndex = 2;
             // 
+            // panel17
+            // 
+            this.panel17.Controls.Add(this.pieChart);
+            this.panel17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel17.Location = new System.Drawing.Point(10, 10);
+            this.panel17.Name = "panel17";
+            this.panel17.Size = new System.Drawing.Size(413, 296);
+            this.panel17.TabIndex = 5;
+            // 
+            // pieChart
+            // 
+            chartArea3.AlignmentOrientation = ((System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations)((System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations.Vertical | System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations.Horizontal)));
+            chartArea3.Area3DStyle.Enable3D = true;
+            chartArea3.Area3DStyle.Inclination = 40;
+            chartArea3.Area3DStyle.IsClustered = true;
+            chartArea3.Area3DStyle.LightStyle = System.Windows.Forms.DataVisualization.Charting.LightStyle.Realistic;
+            chartArea3.Area3DStyle.Rotation = 10;
+            chartArea3.InnerPlotPosition.Auto = false;
+            chartArea3.InnerPlotPosition.Height = 95F;
+            chartArea3.InnerPlotPosition.Width = 79.61632F;
+            chartArea3.InnerPlotPosition.X = 10.19184F;
+            chartArea3.InnerPlotPosition.Y = 2.5F;
+            chartArea3.IsSameFontSizeForAllAxes = true;
+            chartArea3.Name = "ChartArea1";
+            this.pieChart.ChartAreas.Add(chartArea3);
+            this.pieChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pieChart.IsSoftShadows = false;
+            legend3.Alignment = System.Drawing.StringAlignment.Center;
+            legend3.BackColor = System.Drawing.Color.White;
+            legend3.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend3.HeaderSeparatorColor = System.Drawing.Color.Transparent;
+            legend3.InterlacedRows = true;
+            legend3.IsEquallySpacedItems = true;
+            legend3.ItemColumnSeparatorColor = System.Drawing.Color.White;
+            legend3.ItemColumnSpacing = 10;
+            legend3.MaximumAutoSize = 100F;
+            legend3.Name = "Legend1";
+            legend3.ShadowColor = System.Drawing.Color.Transparent;
+            legend3.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            legend3.TitleSeparator = System.Windows.Forms.DataVisualization.Charting.LegendSeparatorStyle.Line;
+            this.pieChart.Legends.Add(legend3);
+            this.pieChart.Location = new System.Drawing.Point(0, 0);
+            this.pieChart.Name = "pieChart";
+            this.pieChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
+            this.pieChart.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+            series3.Legend = "Legend1";
+            series3.Name = "Category";
+            this.pieChart.Series.Add(series3);
+            this.pieChart.Size = new System.Drawing.Size(413, 296);
+            this.pieChart.TabIndex = 3;
+            this.pieChart.Text = "chart1";
+            this.pieChart.TextAntiAliasingQuality = System.Windows.Forms.DataVisualization.Charting.TextAntiAliasingQuality.Normal;
+            title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title2.Name = "MonthlyAnalysis";
+            title2.ShadowColor = System.Drawing.Color.White;
+            title2.Text = "Monthly Analysis";
+            this.pieChart.Titles.Add(title2);
+            // 
             // splitter1
             // 
             this.splitter1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.splitter1.Location = new System.Drawing.Point(432, 10);
+            this.splitter1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.splitter1.Location = new System.Drawing.Point(423, 10);
             this.splitter1.Margin = new System.Windows.Forms.Padding(2);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(10, 296);
@@ -435,125 +510,65 @@
             // panel14
             // 
             this.panel14.Controls.Add(this.columsChart);
-            this.panel14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel14.Location = new System.Drawing.Point(432, 10);
+            this.panel14.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel14.Location = new System.Drawing.Point(433, 10);
             this.panel14.Name = "panel14";
             this.panel14.Padding = new System.Windows.Forms.Padding(30, 1, 5, 1);
-            this.panel14.Size = new System.Drawing.Size(336, 296);
+            this.panel14.Size = new System.Drawing.Size(335, 296);
             this.panel14.TabIndex = 4;
             // 
             // columsChart
             // 
             this.columsChart.BackHatchStyle = System.Windows.Forms.DataVisualization.Charting.ChartHatchStyle.Wave;
             this.columsChart.BorderSkin.BorderWidth = 2;
-            chartArea3.AlignmentOrientation = ((System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations)((System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations.Vertical | System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations.Horizontal)));
-            chartArea3.Area3DStyle.LightStyle = System.Windows.Forms.DataVisualization.Charting.LightStyle.Realistic;
-            chartArea3.Area3DStyle.Rotation = 10;
-            chartArea3.Area3DStyle.WallWidth = 8;
-            chartArea3.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea3.CursorX.AxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            chartArea3.CursorY.AxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            chartArea3.IsSameFontSizeForAllAxes = true;
-            chartArea3.Name = "ChartArea1";
-            chartArea3.ShadowColor = System.Drawing.Color.White;
-            this.columsChart.ChartAreas.Add(chartArea3);
+            chartArea4.AlignmentOrientation = ((System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations)((System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations.Vertical | System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations.Horizontal)));
+            chartArea4.Area3DStyle.LightStyle = System.Windows.Forms.DataVisualization.Charting.LightStyle.Realistic;
+            chartArea4.Area3DStyle.Rotation = 10;
+            chartArea4.Area3DStyle.WallWidth = 8;
+            chartArea4.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea4.CursorX.AxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            chartArea4.CursorY.AxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            chartArea4.IsSameFontSizeForAllAxes = true;
+            chartArea4.Name = "ChartArea1";
+            chartArea4.ShadowColor = System.Drawing.Color.White;
+            this.columsChart.ChartAreas.Add(chartArea4);
             this.columsChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.AutoFitMinFontSize = 8;
-            legend3.BackImageAlignment = System.Windows.Forms.DataVisualization.Charting.ChartImageAlignmentStyle.Top;
-            legend3.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend3.Enabled = false;
-            legend3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            legend3.HeaderSeparator = System.Windows.Forms.DataVisualization.Charting.LegendSeparatorStyle.Line;
-            legend3.IsEquallySpacedItems = true;
-            legend3.IsTextAutoFit = false;
-            legend3.ItemColumnSpacing = 20;
-            legend3.Name = "Legend1";
-            legend3.TitleAlignment = System.Drawing.StringAlignment.Near;
-            legend3.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.columsChart.Legends.Add(legend3);
+            legend4.AutoFitMinFontSize = 8;
+            legend4.BackImageAlignment = System.Windows.Forms.DataVisualization.Charting.ChartImageAlignmentStyle.Top;
+            legend4.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend4.Enabled = false;
+            legend4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            legend4.HeaderSeparator = System.Windows.Forms.DataVisualization.Charting.LegendSeparatorStyle.Line;
+            legend4.IsEquallySpacedItems = true;
+            legend4.IsTextAutoFit = false;
+            legend4.ItemColumnSpacing = 20;
+            legend4.Name = "Legend1";
+            legend4.TitleAlignment = System.Drawing.StringAlignment.Near;
+            legend4.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.columsChart.Legends.Add(legend4);
             this.columsChart.Location = new System.Drawing.Point(30, 1);
             this.columsChart.Name = "columsChart";
             this.columsChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
             this.columsChart.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            series3.ChartArea = "ChartArea1";
-            series3.Color = System.Drawing.Color.Transparent;
-            series3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series3.IsValueShownAsLabel = true;
-            series3.IsVisibleInLegend = false;
-            series3.IsXValueIndexed = true;
-            series3.Legend = "Legend1";
-            series3.Name = "MonthView";
-            series3.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series3.ShadowColor = System.Drawing.Color.White;
-            series3.SmartLabelStyle.IsOverlappedHidden = false;
-            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
-            this.columsChart.Series.Add(series3);
-            this.columsChart.Size = new System.Drawing.Size(301, 294);
+            series4.ChartArea = "ChartArea1";
+            series4.Color = System.Drawing.Color.Transparent;
+            series4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series4.IsValueShownAsLabel = true;
+            series4.IsVisibleInLegend = false;
+            series4.IsXValueIndexed = true;
+            series4.Legend = "Legend1";
+            series4.Name = "MonthView";
+            series4.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
+            series4.ShadowColor = System.Drawing.Color.White;
+            series4.SmartLabelStyle.IsOverlappedHidden = false;
+            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.columsChart.Series.Add(series4);
+            this.columsChart.Size = new System.Drawing.Size(300, 294);
             this.columsChart.SuppressExceptions = true;
             this.columsChart.TabIndex = 0;
             this.columsChart.TabStop = false;
             this.columsChart.Text = "chart1";
             this.columsChart.TextAntiAliasingQuality = System.Windows.Forms.DataVisualization.Charting.TextAntiAliasingQuality.Normal;
-            // 
-            // panel17
-            // 
-            this.panel17.Controls.Add(this.pieChart);
-            this.panel17.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel17.Location = new System.Drawing.Point(10, 10);
-            this.panel17.Name = "panel17";
-            this.panel17.Size = new System.Drawing.Size(422, 296);
-            this.panel17.TabIndex = 5;
-            // 
-            // pieChart
-            // 
-            chartArea4.AlignmentOrientation = ((System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations)((System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations.Vertical | System.Windows.Forms.DataVisualization.Charting.AreaAlignmentOrientations.Horizontal)));
-            chartArea4.Area3DStyle.Enable3D = true;
-            chartArea4.Area3DStyle.Inclination = 40;
-            chartArea4.Area3DStyle.IsClustered = true;
-            chartArea4.Area3DStyle.LightStyle = System.Windows.Forms.DataVisualization.Charting.LightStyle.Realistic;
-            chartArea4.Area3DStyle.Rotation = 10;
-            chartArea4.InnerPlotPosition.Auto = false;
-            chartArea4.InnerPlotPosition.Height = 95F;
-            chartArea4.InnerPlotPosition.Width = 79.61632F;
-            chartArea4.InnerPlotPosition.X = 10.19184F;
-            chartArea4.InnerPlotPosition.Y = 2.5F;
-            chartArea4.IsSameFontSizeForAllAxes = true;
-            chartArea4.Name = "ChartArea1";
-            this.pieChart.ChartAreas.Add(chartArea4);
-            this.pieChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pieChart.IsSoftShadows = false;
-            legend4.Alignment = System.Drawing.StringAlignment.Center;
-            legend4.BackColor = System.Drawing.Color.White;
-            legend4.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend4.HeaderSeparatorColor = System.Drawing.Color.Transparent;
-            legend4.InterlacedRows = true;
-            legend4.IsEquallySpacedItems = true;
-            legend4.ItemColumnSeparatorColor = System.Drawing.Color.White;
-            legend4.ItemColumnSpacing = 10;
-            legend4.MaximumAutoSize = 100F;
-            legend4.Name = "Legend1";
-            legend4.ShadowColor = System.Drawing.Color.Transparent;
-            legend4.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            legend4.TitleSeparator = System.Windows.Forms.DataVisualization.Charting.LegendSeparatorStyle.Line;
-            this.pieChart.Legends.Add(legend4);
-            this.pieChart.Location = new System.Drawing.Point(0, 0);
-            this.pieChart.Name = "pieChart";
-            this.pieChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            this.pieChart.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
-            series4.Legend = "Legend1";
-            series4.Name = "Category";
-            this.pieChart.Series.Add(series4);
-            this.pieChart.Size = new System.Drawing.Size(422, 296);
-            this.pieChart.TabIndex = 3;
-            this.pieChart.Text = "chart1";
-            this.pieChart.TextAntiAliasingQuality = System.Windows.Forms.DataVisualization.Charting.TextAntiAliasingQuality.Normal;
-            title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title2.Name = "MonthlyAnalysis";
-            title2.ShadowColor = System.Drawing.Color.White;
-            title2.Text = "Monthly Analysis";
-            this.pieChart.Titles.Add(title2);
             // 
             // expenseAddPage
             // 
@@ -684,7 +699,6 @@
             this.DateAndTime.HeaderText = "DateAndTime";
             this.DateAndTime.MinimumWidth = 6;
             this.DateAndTime.Name = "DateAndTime";
-            this.DateAndTime.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // Amount
             // 
@@ -1846,14 +1860,15 @@
             this.mainTabControl.ResumeLayout(false);
             this.dashBoardPage.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel37.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.lineChart)).EndInit();
             this.panel32.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dougenutChart)).EndInit();
             this.panel15.ResumeLayout(false);
-            this.panel14.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.columsChart)).EndInit();
             this.panel17.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pieChart)).EndInit();
+            this.panel14.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.columsChart)).EndInit();
             this.expenseAddPage.ResumeLayout(false);
             this.expenseDataGridViewP.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.expenseDataGridView)).EndInit();
@@ -1997,15 +2012,8 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart lineChart;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Splitter splitter2;
-        private System.Windows.Forms.Splitter splitter3;
         private System.Windows.Forms.DataGridView expenseDataGridView;
         private CustomButton removeCategoryBtn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CategoryID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Category;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DateAndTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Detail;
       //  private System.Windows.Forms.DataGridView categorydataGrid;
         private System.Windows.Forms.DataGridViewTextBoxColumn CategoryIdInCategoryTable;
         private System.Windows.Forms.DataGridViewTextBoxColumn CategoryName;
@@ -2018,6 +2026,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Limit;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.Panel panel33;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CategoryID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Category;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DateAndTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Detail;
+        private System.Windows.Forms.Panel panel37;
+        private System.Windows.Forms.Splitter splitter3;
     }
 }
 
