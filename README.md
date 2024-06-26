@@ -54,4 +54,4 @@ Monthly and yearly Expense DashBoard View Analysis
 
 ![Logo](https://i.ibb.co/0ChxTWf/Screenshot-24.png)
 
-[Demo Link]<br>(https://youtu.be/vnUa_VEQAvo?si=gtOHKZhtgMB5qU3S)
+[Demo vedio Link]<br>(https://youtu.be/vnUa_VEQAvo?si=gtOHKZhtgMB5qU3S)
